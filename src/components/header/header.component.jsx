@@ -16,22 +16,22 @@ const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 export const HeaderComponent = () => {
-//   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
-//   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+  const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   const handleOpenNavMenu = (event) => {
-    // setAnchorElNav(event.currentTarget);
+    setAnchorElNav(event.currentTarget);
   };
   const handleOpenUserMenu = (event) => {
-    // setAnchorElUser(event.currentTarget);
+    setAnchorElUser(event.currentTarget);
   };
 
   const handleCloseNavMenu = () => {
-    // setAnchorElNav(null);
+    setAnchorElNav(null);
   };
 
   const handleCloseUserMenu = () => {
-    // setAnchorElUser(null);
+    setAnchorElUser(null);
   };
 
   return (
@@ -60,7 +60,7 @@ export const HeaderComponent = () => {
             </IconButton>
             <Menu
               id="menu-appbar"
-            //   anchorEl={anchorElNav}
+              anchorEl={anchorElNav}
               anchorOrigin={{
                 vertical: 'bottom',
                 horizontal: 'left',
@@ -70,7 +70,7 @@ export const HeaderComponent = () => {
                 vertical: 'top',
                 horizontal: 'left',
               }}
-            //   open={Boolean(anchorElNav)}
+              open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
               sx={{
                 display: { xs: 'block', md: 'none' },
@@ -105,14 +105,14 @@ export const HeaderComponent = () => {
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+              <IconButton onClick={e => handleOpenUserMenu(e)} sx={{ p: 0 }}>
+                <Avatar alt="Remy Sharp" src="https://picsum.photos/id/1010/100/100" />
               </IconButton>
             </Tooltip>
             <Menu
               sx={{ mt: '45px' }}
               id="menu-appbar"
-            //   anchorEl={anchorElUser}
+              anchorEl={anchorElUser}
               anchorOrigin={{
                 vertical: 'top',
                 horizontal: 'right',
@@ -122,7 +122,7 @@ export const HeaderComponent = () => {
                 vertical: 'top',
                 horizontal: 'right',
               }}
-            //   open={Boolean(anchorElUser)}
+              open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (

@@ -10,10 +10,10 @@ export const CardBigContainer = (props) => {
         <Container maxWidth="xl">
             <Grid container spacing={2} columns={12}>
                 <Grid item xs={6}>
-                    <CardComponent size={800} imageId={447} />
+                    <CardComponent size={800} imageId={447} description={'Men clothing'} />
                 </Grid>
                 <Grid item xs={6}>
-                    <CardComponent size={800} imageId={1011} />
+                    <CardComponent size={800} imageId={1011} description={'Women clothing'}/>
                 </Grid>
             </Grid>
         </Container>
