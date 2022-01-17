@@ -4,9 +4,15 @@ import './index.css';
 import HomePage from './pages/home/Home-Page';
 import reportWebVitals from './reportWebVitals';
 
+//Router lib import used for navigation between pages
+import { BrowserRouter } from "react-router-dom";
+
 ReactDOM.render(
   <React.StrictMode>
-    <HomePage />
+    <BrowserRouter>       {/*by wrapping our app in BrowseRouter we can use the routing on our entire app*/}
+      <HomePage />                  
+    </BrowserRouter>
+   
   </React.StrictMode>,
   document.getElementById('root')
 );
