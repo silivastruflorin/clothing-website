@@ -3,6 +3,8 @@ import { styled } from "@mui/material/styles";
 import ButtonBase from "@mui/material/ButtonBase";
 import Typography from '@mui/material/Typography';
 
+import { Link } from "react-router-dom";
+
 const ImageSrc = styled('span')({
     position: 'absolute',
     left: 0,
@@ -58,7 +60,7 @@ const ImageButton = styled(ButtonBase)(({ theme , height}) => ({
   }));
   
 
-export const CardComponent = ({size , imageId , description}) => {
+export const CardComponent = ({size , imageId , description, page}) => {
     return(
        
         <ImageButton
@@ -83,7 +85,9 @@ export const CardComponent = ({size , imageId , description}) => {
                     pb: (theme) => `calc(${theme.spacing(1)} + 6px)`,
                     }}
                 >
-                    {description}
+                <Link to={page ? page : "/" }  style={{ color: 'inherit', textDecoration: 'inherit' }}  > 
+                  {description}
+                </Link>
                 </Typography>
             </Image>
         </ImageButton>
