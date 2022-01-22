@@ -1,9 +1,9 @@
 import React from "react";
 
-function ErrorPage(error){
+function ErrorPage(props){
     return(
         <div> 
-            {error}
+            Page not found {props.text}
         </div>
     )
 }

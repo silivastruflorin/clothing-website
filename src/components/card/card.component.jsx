@@ -2,8 +2,10 @@ import React from "react";
 import { styled } from "@mui/material/styles";
 import ButtonBase from "@mui/material/ButtonBase";
 import Typography from '@mui/material/Typography';
+import { push } from "connected-react-router";
 
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 
 const ImageSrc = styled('span')({
     position: 'absolute',
@@ -60,9 +62,9 @@ const ImageButton = styled(ButtonBase)(({ theme , height}) => ({
   }));
   
 
-export const CardComponent = ({size , imageId , description, page}) => {
+
+const CardComponent = ({imageId,size,description,page,gotoPage}) => {
     return(
-       
         <ImageButton
             focusRipple
             key={''}
@@ -70,6 +72,9 @@ export const CardComponent = ({size , imageId , description, page}) => {
             width: '100%',
             }}
             height={size}
+            onClick={(e) => {
+              gotoPage(page)
+            }}
         >
             <ImageSrc style={{ backgroundImage: `url(https://picsum.photos/id/${imageId}/${size}/${size})` }} />
             <ImageBackdrop className="MuiImageBackdrop-root" />
@@ -85,11 +90,20 @@ export const CardComponent = ({size , imageId , description, page}) => {
                     pb: (theme) => `calc(${theme.spacing(1)} + 6px)`,
                     }}
                 >
-                <Link to={page ? page : "/" }  style={{ color: 'inherit', textDecoration: 'inherit' }}  > 
                   {description}
-                </Link>
+
                 </Typography>
             </Image>
         </ImageButton>
     )
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return{
+    gotoPage :(path) => dispatch(push(path))
+  }
+   
+}
+
+
+export default connect(null,mapDispatchToProps)(CardComponent);

@@ -1,5 +1,5 @@
 import React from "react";
-import { CardComponent } from "../card/card.component";
+import CardComponent  from "../card/card.component";
 
 import { Container } from '@mui/material';
 import Grid from '@mui/material/Grid';
