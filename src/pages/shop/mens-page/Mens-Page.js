@@ -1,8 +1,14 @@
 import React from "react";
+import Container from '@mui/material/Container';
+import ItemsDisplay from '../../../components/shop/shop-body/shop.body'
+
 
 function MensPage ()  {
     return(
-        <div>This is the mens's page</div>
+        <Container maxWidth="xl">
+            <ItemsDisplay />
+        </Container>
+      
     )
 }
 
