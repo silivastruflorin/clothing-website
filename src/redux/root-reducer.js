@@ -21,17 +21,19 @@ import { connectRouter } from 'connected-react-router' // for navigation
                             
 */
 import userReducer from "./user/user.reducer";
+import cartReducer from "./cart/cart.reducer";
 
 
 const rootReducer = (history) => combineReducers(
     {
         router: connectRouter(history),
-        userkey: userReducer      /* returns an object {
+        userkey: userReducer,      /* returns an object {
                                                         userkey: {
                                                                     currentUser : null
                                                                 }
                                                     
                                                     } */
+        cartkey : cartReducer
     }
 )
 

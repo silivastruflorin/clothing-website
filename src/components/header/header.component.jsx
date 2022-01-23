@@ -11,11 +11,16 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
+import Grid from '@mui/material/Grid';
+
+import CustomizedBadges from '../../components/shopping-Cart/ShoppingCartIcon.component';
+import { connect } from 'react-redux';
+import { push } from 'connected-react-router';
 
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-export const HeaderComponent = () => {
+let HeaderComponent = ({push}) => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -43,10 +48,10 @@ export const HeaderComponent = () => {
             noWrap
             component="div"
             sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
+            onClick={()=> push('/')}
           >
-            LOGO
+            LOGO HERE
           </Typography>
-
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
@@ -89,7 +94,7 @@ export const HeaderComponent = () => {
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
           >
-            LOGO
+            LOGO HERE
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
@@ -102,35 +107,42 @@ export const HeaderComponent = () => {
               </Button>
             ))}
           </Box>
-
+          
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={e => handleOpenUserMenu(e)} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="https://picsum.photos/id/1010/100/100" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
+          <Grid container spacing={4}>
+            <Grid item xs>
+              <CustomizedBadges />  {/* Shopping cart badge  */}
+            </Grid>
+            <Grid item xs>
+              <Tooltip title="Open settings">
+                <IconButton onClick={e => handleOpenUserMenu(e)} sx={{ p: 0 }}>
+                  <Avatar alt="Remy Sharp" src="https://picsum.photos/id/1010/100/100" />
+                </IconButton>
+               </Tooltip>
+              <Menu
+                sx={{ mt: '45px' }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {settings.map((setting) => (
+                  <MenuItem key={setting} onClick={handleCloseNavMenu}>
+                    <Typography textAlign="center">{setting}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Grid>
+          </Grid>     
           </Box>
         </Toolbar>
       </Container>
@@ -138,3 +150,11 @@ export const HeaderComponent = () => {
   );
 };
 
+const mapDispatchToProps = dispatch => {
+  return {
+      push: (page) => dispatch(push(page))
+  }
+}
+
+HeaderComponent = connect(null,mapDispatchToProps)(HeaderComponent);
+export {HeaderComponent};

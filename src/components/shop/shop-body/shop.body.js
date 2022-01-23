@@ -8,8 +8,10 @@ import IconButton from '@mui/material/IconButton';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 
+import {connect} from 'react-redux';
+import {AddItemToCart} from '../../../redux/cart/cart.actions';
 
-export default function ItemsDisplay() {
+function ItemsDisplay({additem}) {
   const [itemData, setItemsdata] = useState([]);
   const [whenToUpdate, setwhenToUpdate] = useState(0);
   const [itemDataFiltered, setitemDataFiltered] = useState([]);
@@ -69,7 +71,7 @@ export default function ItemsDisplay() {
               <IconButton
                 sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
                 aria-label={`info about ${item.title}`}
-                onClick={()=>console.log(item)}
+                onClick={()=>additem(item)}
                 >
                  buy
               </IconButton>
@@ -83,3 +85,12 @@ export default function ItemsDisplay() {
   );
 }
 
+const mapDispatchToProps = dispatch => {
+  return {
+      additem : (item) => {dispatch(AddItemToCart(item))}
+  }
+}
+
+ItemsDisplay = connect(null,mapDispatchToProps)(ItemsDisplay)
+
+export default ItemsDisplay;
