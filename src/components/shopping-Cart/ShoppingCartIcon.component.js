@@ -65,7 +65,7 @@ let CustomizedBadges = ({numberOfItemsInCart,TotalPrice,cartItems}) => {
       >
         <Typography sx={{ p: 2 }}>
           {
-            numberOfItemsInCart == 0 ? 
+            numberOfItemsInCart !== 0 ? 
                                         <Stack spacing={1}>
                                           <Item>
                                             <CartItem itemsArray={cartItems} />

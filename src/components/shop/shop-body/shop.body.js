@@ -11,7 +11,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import {connect} from 'react-redux';
 import {AddItemToCart} from '../../../redux/cart/cart.actions';
 
-function ItemsDisplay({additem}) {
+let ItemsDisplay = ({additem}) => {
   const [itemData, setItemsdata] = useState([]);
   const [whenToUpdate, setwhenToUpdate] = useState(0);
   const [itemDataFiltered, setitemDataFiltered] = useState([]);
@@ -37,9 +37,6 @@ function ItemsDisplay({additem}) {
     setitemDataFiltered(itemData.filter(item => item.title.toUpperCase().includes(value.toUpperCase())));
   }
 
-  const hangleBuyClick = (item) => {
-   
-  }
   return (
     <ImageList /*sx={{ width: 500, height: 450 }}*/ cols={4}>
     <ImageListItem key="Subheader" cols={4}>
@@ -59,8 +56,8 @@ function ItemsDisplay({additem}) {
       {itemDataFiltered.map((item) => (
         <ImageListItem key={item.image}>
           <img
-            src={`${item.image}?w=248&fit=crop&auto=format`}
-            srcSet={`${item.image}?w=248&fit=crop&auto=format&dpr=2 2x`}
+            src={`${item.image}`}
+            srcSet={`${item.image}`}
             alt={item.title}
             loading="lazy"
           />
