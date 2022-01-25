@@ -1,4 +1,5 @@
 import { createStore, applyMiddleware } from "redux";
+
 /* 
     Action ---Middleware---> Root Reducer ---> Store ---> DOM Changes
 
@@ -21,6 +22,7 @@ const middlewares = [logger,routerMiddleware(history)]; //we put all the middlew
 //Create Store 
 const store = createStore(rootReducer(history), applyMiddleware(...middlewares)); //tackes the root reducer  and the middlewares as parameter
 
+// console.log(store.getState())
 
 export default store;
 

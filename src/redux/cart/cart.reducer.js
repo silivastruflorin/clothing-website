@@ -12,7 +12,7 @@ const cartReducer = (state = INITIAL_STATE , action) => {
             return{
                 ...state,
                 cartItems : cartItemsUpdated,
-                numberOfItemsInCart: state.numberOfItemsInCart + 1,
+                numberOfItemsInCart: cartItemsUpdated.length, //will be deleted when using selectors
                 totalPrice : cartItemsUpdated.map(item => item.price).reduce((previousValue, currentValue) => previousValue + currentValue).toFixed(2) //2 decimals
             }
             

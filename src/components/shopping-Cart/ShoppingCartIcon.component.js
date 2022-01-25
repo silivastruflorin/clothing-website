@@ -70,7 +70,11 @@ let CustomizedBadges = ({numberOfItemsInCart,TotalPrice}) => {
               </Grid>
             </Grid>
             </Item>
-            <Item>Total price: {TotalPrice} Euro</Item>
+            <Item>
+              <Typography variant="subtitle2" gutterBottom component="div">
+                TOTAL PRICE: {TotalPrice} €
+              </Typography>
+            </Item>
           </Stack>
         </Typography>
       </Popover>
