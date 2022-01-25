@@ -8,7 +8,12 @@ import Popover from '@mui/material/Popover';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import { connect } from 'react-redux';
-import { Grid } from '@mui/material';
+
+//User defined
+import {CartItem} from '../shop/cart-Item/cart-item.component';
+import {CartItemsSelector} from './../../redux/selectors/selectors';
+
+
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   '& .MuiBadge-badge': {
@@ -27,7 +32,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 
-let CustomizedBadges = ({numberOfItemsInCart,TotalPrice}) => {
+let CustomizedBadges = ({numberOfItemsInCart,TotalPrice,cartItems}) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleClick = (event) => {
@@ -59,23 +64,20 @@ let CustomizedBadges = ({numberOfItemsInCart,TotalPrice}) => {
         }}
       >
         <Typography sx={{ p: 2 }}>
-          <Stack spacing={1}>
-            <Item>
-            <Grid container spacing={2}>
-              <Grid item xs={8}>
-              Item 1
-              </Grid>
-              <Grid item xs={8}>
-              Item 2
-              </Grid>
-            </Grid>
-            </Item>
-            <Item>
-              <Typography variant="subtitle2" gutterBottom component="div">
-                TOTAL PRICE: {TotalPrice} €
-              </Typography>
-            </Item>
-          </Stack>
+          {
+            numberOfItemsInCart == 0 ? 
+                                        <Stack spacing={1}>
+                                          <Item>
+                                            <CartItem itemsArray={cartItems} />
+                                          </Item>
+                                          <Item>
+                                            <Typography variant="subtitle2" gutterBottom component="div">
+                                              TOTAL PRICE: {TotalPrice} €
+                                            </Typography>
+                                          </Item>
+                                        </Stack>
+                                      : "Cart is empty"
+            }
         </Typography>
       </Popover>
     </div>
@@ -87,8 +89,9 @@ let CustomizedBadges = ({numberOfItemsInCart,TotalPrice}) => {
 
 const mapStateToProps = state => {
     return{
-        numberOfItemsInCart : state.cartkey.numberOfItemsInCart,
-        TotalPrice: state.cartkey.totalPrice
+        numberOfItemsInCart : state.cartkey.numberOfItemsInCart, // old aproach without using Selectors
+        TotalPrice: state.cartkey.totalPrice,                    // old aproach without using Selectors
+        cartItems: CartItemsSelector(state)                      // new aproach using selectors
     }
 }
 
