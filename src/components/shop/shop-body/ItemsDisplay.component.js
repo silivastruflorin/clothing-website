@@ -7,19 +7,39 @@ import ListSubheader from '@mui/material/ListSubheader';
 import IconButton from '@mui/material/IconButton';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
+import Popover from '@mui/material/Popover';
+import Typography from '@mui/material/Typography';
+
 
 import {connect} from 'react-redux';
 import {AddItemToCart} from '../../../redux/cart/cart.actions';
+import {RatingsSelector} from '../../../redux/selectors/selectors';
 
-let ItemsDisplay = ({additem}) => {
+let ItemsDisplay = ({productCategory,additem,getRatings,ratings}) => {
   const [itemData, setItemsdata] = useState([]);
   const [whenToUpdate, setwhenToUpdate] = useState(0);
   const [itemDataFiltered, setitemDataFiltered] = useState([]);
+
+
+  //popOver
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handlePopoverOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handlePopoverClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+
+  // end popOver
   
   // Similar to componentDidMount and componentDidUpdate:   //I WILL Replace it later with Saga middleware
   useEffect(() => {
     // Get data from API
-    fetch("https://fakestoreapi.com/products/category/men's%20clothing")
+    fetch(`https://fakestoreapi.com/products/category/${productCategory}`)
             .then(res=>res.json())
             .then(json=>{
               // console.log("received from server",json)
@@ -48,13 +68,13 @@ let ItemsDisplay = ({additem}) => {
         freeSolo
         options={itemData.map((option) => option.title)}
         renderInput={(params) => <TextField {...params} label="Search..." />}
-        onSelect={(e)=> {hangleSearch(e.target.value)}}
-        onChange={(e)=> {hangleSearch(e.target.value)} }
+        onSelect={(e)=> {hangleSearch(e.target.value.toString())}}
+        onChange={(e)=> {hangleSearch(e.target.value.toString())} }
       />
         </ListSubheader>
     </ImageListItem>
       {itemDataFiltered.map((item) => (
-        <ImageListItem key={item.image}>
+        <ImageListItem key={item.image} >
           <img
             src={`${item.image}`}
             srcSet={`${item.image}`}
@@ -64,6 +84,13 @@ let ItemsDisplay = ({additem}) => {
           <ImageListItemBar
             title={item.title}
             subtitle={`${item.price} Euro`}
+            onMouseEnter={
+              ()=> getRatings(item)
+            }
+            onMouseOver={handlePopoverOpen}
+            onMouseLeave={
+              handlePopoverClose
+            }
             actionIcon={
               <IconButton
                 sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
@@ -72,22 +99,51 @@ let ItemsDisplay = ({additem}) => {
                 >
                  buy
               </IconButton>
+              
             }
-            
         />
-            
       </ImageListItem>
     ))}
-  </ImageList>
+      <Popover
+          id="mouse-over-popover"
+          sx={{
+            pointerEvents: 'none',
+          }}
+          open={open}
+          anchorEl={anchorEl}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left',
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'left',
+          }}
+          onClose={handlePopoverClose}
+          disableRestoreFocus
+        >
+              <Typography sx={{ p: 1 }}>
+                Rating: {ratings.rate}
+                Stock: {ratings.count}
+              </Typography>
+        </Popover>
+  </ImageList>  
   );
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-      additem : (item) => {dispatch(AddItemToCart(item))}
+      additem : (item) => {dispatch(AddItemToCart(item))},
+      getRatings : (item)  => {dispatch({type: 'ITEM_INFO_REQUESTED', payload: item})} //saga action is dipatch
   }
 }
 
-ItemsDisplay = connect(null,mapDispatchToProps)(ItemsDisplay)
+const mapStateToProps = (state) => {
+  return{
+    ratings: RatingsSelector(state)
+  }
+}
+
+ItemsDisplay = connect(mapStateToProps,mapDispatchToProps)(ItemsDisplay)
 
 export default ItemsDisplay;

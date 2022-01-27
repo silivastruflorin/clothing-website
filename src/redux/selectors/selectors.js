@@ -2,6 +2,7 @@ import { createSelector } from '@reduxjs/toolkit';
 
 const selectCartItems = state => state.cartkey.cartItems;
 const selectTotalPrice = state => state.cartkey.totalPrice;
+const selectRatings = state => state.cartkey.rating;
 
 
 
@@ -13,3 +14,5 @@ export const numberOfItemsSelector = createSelector(
        return  cartItems.length
     }
 )
+
+export const RatingsSelector = createSelector(selectRatings,(ratigs)=> {return ratigs});

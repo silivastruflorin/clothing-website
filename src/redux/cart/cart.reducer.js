@@ -2,7 +2,8 @@
 const INITIAL_STATE = {
     cartItems : [],
     numberOfItemsInCart: 0,
-    totalPrice: 0
+    totalPrice: 0,
+    rating: []     // used with saga to get Rating and count
 }
 
 const cartReducer = (state = INITIAL_STATE , action) => {
@@ -20,6 +21,17 @@ const cartReducer = (state = INITIAL_STATE , action) => {
             return{
                     
             }
+        //Saga actions: see file redux.sagas.js
+        case 'ITEM_INFO_GET_SUCCESEED':
+            // console.log(action.ratings)
+            return {
+                ...state,
+                rating : action.ratings //yelded by redux.sagas.js
+            }
+            
+        case 'ITEM_INFO_GET_FAILED':
+            console.log(action.payload)
+            return state;
 
         default: 
             return state;

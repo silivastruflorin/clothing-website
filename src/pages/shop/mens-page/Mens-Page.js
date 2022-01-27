@@ -1,12 +1,12 @@
 import React from "react";
 import Container from '@mui/material/Container';
-import ItemsDisplay from '../../../components/shop/shop-body/shop.body'
+import ItemsDisplay from '../../../components/shop/shop-body/ItemsDisplay.component'
 
 
 function MensPage ()  {
     return(
         <Container maxWidth="xl">
-            <ItemsDisplay />
+            <ItemsDisplay productCategory="men's%20clothing" />
         </Container>
       
     )
