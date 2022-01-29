@@ -47,9 +47,11 @@ let ItemsDisplay = ({productCategory,additem,getRatings,ratings}) => {
               setitemDataFiltered(json) //initialize first with all items
             })
     
-},[whenToUpdate]); /*by passing the whenToUpdate we break the infinite loop of state update -sideeffect- rerender compoment.
-                  Checks if whenToUpdate has changed if not changed stop loop. If we remember after each render of a component the sideeffect is called
-                  and also after each time the state is changed the the componenent is rerendered.
+},[whenToUpdate]); /*by passing the [whenToUpdate] we break the infinite loop of state update -sideeffect- rerender compoment.
+                  If whenToUpdate did not changed then useeffect does not executes.If we want the useEffect to execute only 
+                  on the component mount then we pass just an empty array [],
+                  We can use multiple useEfects on the same page.For example one when the component mounts (by passing []) and another one 
+                  where we can pass [someVariable,someAnotherVariable] and it will execute only when someVariable or someAnotherVariable will change
                   */
 
   const hangleSearch = (value) => {
