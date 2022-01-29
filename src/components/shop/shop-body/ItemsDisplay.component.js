@@ -52,6 +52,7 @@ let ItemsDisplay = ({productCategory,additem,getRatings,ratings}) => {
                   on the component mount then we pass just an empty array [],
                   We can use multiple useEfects on the same page.For example one when the component mounts (by passing []) and another one 
                   where we can pass [someVariable,someAnotherVariable] and it will execute only when someVariable or someAnotherVariable will change
+                  If nothing is passed as a second argument for useEffect then will execute after each render (possible infinite loop-watch out)
                   */
 
   const hangleSearch = (value) => {
