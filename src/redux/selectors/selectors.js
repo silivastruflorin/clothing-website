@@ -4,6 +4,7 @@ const selectCartItems = state => state.cartkey.cartItems;
 const selectTotalPrice = state => state.cartkey.totalPrice;
 const selectRatings = state => state.cartkey.rating;
 const selectProducts = state => state.cartkey.productsOnPage;
+const selectIsRetreived = state => state.cartkey.isRetrevingData;
 
 
 
@@ -18,3 +19,4 @@ export const numberOfItemsSelector = createSelector(
 )
 export const RatingsSelector = createSelector(selectRatings,(ratigs)=> ratigs);
 export const ProductsSelector = createSelector(selectProducts,(products)=>  products);
+export const selectIsRetreivedSelector = createSelector(selectIsRetreived,(isRetrevingData)=>  isRetrevingData);

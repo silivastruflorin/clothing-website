@@ -1,6 +1,5 @@
-import * as React from 'react';
 import { useState, useEffect } from 'react';
-import {useDispatch,useSelector} from 'react-redux'
+import {useDispatch, useSelector, connect} from 'react-redux'
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
@@ -11,16 +10,16 @@ import Autocomplete from '@mui/material/Autocomplete';
 import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 
-
-import {connect} from 'react-redux';
+//User defined
 import {AddItemToCart} from '../../../redux/cart/cart.actions';
-import {RatingsSelector,ProductsSelector} from '../../../redux/selectors/selectors';
+import {RatingsSelector, ProductsSelector, selectIsRetreivedSelector} from '../../../redux/selectors/selectors';
 
-let ItemsDisplay = ({productCategory, getRatings, isRetrevingData}) => {
+let ItemsDisplay = ({productCategory}) => {
   const [itemData, setItemsdata] = useState([]);
   const [itemDataFiltered, setitemDataFiltered] = useState([]);
   let ratings = useSelector(RatingsSelector);
   let products = useSelector(ProductsSelector);
+  let isRetrevingData = useSelector(selectIsRetreivedSelector);
 
   const dispatch= useDispatch()
   //popOver
@@ -38,19 +37,19 @@ let ItemsDisplay = ({productCategory, getRatings, isRetrevingData}) => {
 
   // end popOver
 
-useEffect(() => {
-        //Get products from api using SAGA
-        dispatch({type: 'GET_PRODUCTS_REQUEST', payload: productCategory });
-        // setitemDataFiltered(products);
-        // setItemsdata(products);
-},[productCategory]);
- 
-useEffect(() => {
-  //Get products from api using SAGA
-  // dispatch({type: 'GET_PRODUCTS_REQUEST', payload: productCategory });
-  setitemDataFiltered(products);
-  setItemsdata(products);
-},[products]);
+  useEffect(() => {
+          //Get products from api using SAGA
+          dispatch({type: 'GET_PRODUCTS_REQUEST', payload: productCategory });
+          // setitemDataFiltered(products);
+          // setItemsdata(products);
+  },[productCategory]);
+  
+  useEffect(() => {
+    //Get products from api using SAGA
+    // dispatch({type: 'GET_PRODUCTS_REQUEST', payload: productCategory });
+    setitemDataFiltered(products);
+    setItemsdata(products);
+  },[products]);
 
   const hangleSearch = (value) => {
     // set itemDataFiltered based on value from input box
@@ -85,7 +84,7 @@ useEffect(() => {
             title={item.title}
             subtitle={`${item.price} Euro`}
             onMouseEnter={
-              ()=> getRatings(item)
+              ()=> dispatch({type: 'ITEM_INFO_REQUESTED', payload: item})
             }
             onMouseOver={handlePopoverOpen}
             onMouseLeave={
@@ -99,7 +98,6 @@ useEffect(() => {
                 >
                  buy
               </IconButton>
-              
             }
         />
       </ImageListItem>
@@ -131,25 +129,26 @@ useEffect(() => {
                                              </Typography>
                                              )
           }
-             
         </Popover>
   </ImageList>  
   );
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-      getRatings : (item)  => {dispatch({type: 'ITEM_INFO_REQUESTED', payload: item})} //saga action is dipatched
-  }
-}
+//Entire logic of connect is replaced by using hooks useDispatch and useSelector
 
-const mapStateToProps = (state) => {
-  return{
-    //ratings: RatingsSelector(state),
-    isRetrevingData : state.cartkey.isRetrevingData //old way without using selectors
-  }
-}
+// const mapDispatchToProps = dispatch => {
+//   return {
+//       getRatings : (item)  => {} //saga action is dipatched
+//   }
+// }
 
-ItemsDisplay = connect(mapStateToProps,mapDispatchToProps)(ItemsDisplay)
+// const mapStateToProps = (state) => {
+//   return{
+//     //ratings: RatingsSelector(state),
+//     isRetrevingData : state.cartkey.isRetrevingData //old way without using selectors
+//   }
+// }
+
+// ItemsDisplay = connect(mapStateToProps,mapDispatchToProps)(ItemsDisplay)
 
 export default ItemsDisplay;
