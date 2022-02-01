@@ -37,7 +37,7 @@ function* fetchItemInfo(action) {
        
       const products = yield call(ApiAllProductsFromCategory, action.payload); //gets passed to API as args
    //    console.log(item.rating)
-      yield put({type: "GET_PRODUCTS_REQUEST_SUCCESEED", products});    //action will be implemented on cart reducer {type:'',ratings:{}} instead of payload we use directly ratings
+      yield put({type: "GET_PRODUCTS_REQUEST_SUCCESEED", products});    //action will be implemented on cart reducer {type:'',products:{}} instead of payload we use directly ratings
    } catch (e) {
       yield put({type: "GET_PRODUCTS_REQUEST_FAILED", message: e.message});
    }
