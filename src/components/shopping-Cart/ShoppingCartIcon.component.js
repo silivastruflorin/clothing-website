@@ -7,11 +7,11 @@ import Typography from '@mui/material/Typography';
 import Popover from '@mui/material/Popover';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 
 //User defined
 import {CartItem} from '../shop/cart-Item/cart-item.component';
-import {CartItemsSelector} from './../../redux/selectors/selectors';
+import {CartItemsSelector, numberOfItemsSelector, TotalPriceSelector} from './../../redux/selectors/selectors';
 
 
 
@@ -32,8 +32,12 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 
-let CustomizedBadges = ({numberOfItemsInCart, TotalPrice, cartItems}) => {
+let CustomizedBadges = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const numberOfItemsInCart = useSelector(numberOfItemsSelector);
+  const cartItems = useSelector(CartItemsSelector);
+  const TotalPrice = useSelector(TotalPriceSelector);
+  
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -87,14 +91,15 @@ let CustomizedBadges = ({numberOfItemsInCart, TotalPrice, cartItems}) => {
   );
 }
 
-const mapStateToProps = state => {
-    return{
-        numberOfItemsInCart : state.cartkey.numberOfItemsInCart, // old aproach without using Selectors
-        TotalPrice: state.cartkey.totalPrice,                    // old aproach without using Selectors
-        cartItems: CartItemsSelector(state)                      // new aproach using selectors
-    }
-}
+// Commented because it was replaced by useSelector to connect to the store an get data based on selector created in selectors.js
+// const mapStateToProps = state => {
+//     return{
+//         numberOfItemsInCart : state.cartkey.numberOfItemsInCart, // old aproach without using Selectors
+//         TotalPrice: state.cartkey.totalPrice,                    // old aproach without using Selectors
+//         cartItems: CartItemsSelector(state)                      // new aproach using selectors
+//     }
+// }
 
-CustomizedBadges = connect(mapStateToProps)(CustomizedBadges);
+// CustomizedBadges = connect(mapStateToProps)(CustomizedBadges);
 
 export default CustomizedBadges;

@@ -1,8 +1,8 @@
 //declare a default value for state
 const INITIAL_STATE = {
     cartItems : [],
-    numberOfItemsInCart: 0,
-    totalPrice: 0,
+    // numberOfItemsInCart: 0,   //replaced by selectors
+    // totalPrice: 0,           //replaced by selectors
     rating: [],    // used with saga to get Rating and count
     isRetrevingData: false,
     productsOnPage: []
@@ -15,8 +15,8 @@ const cartReducer = (state = INITIAL_STATE , action) => {
             return{
                 ...state,
                 cartItems : cartItemsUpdated,
-                numberOfItemsInCart: cartItemsUpdated.length, //will be deleted when using selectors
-                totalPrice : cartItemsUpdated.map(item => item.price).reduce((previousValue, currentValue) => previousValue + currentValue).toFixed(2) //2 decimals
+                // numberOfItemsInCart: cartItemsUpdated.length, //will be deleted when using selectors
+                // totalPrice : cartItemsUpdated.map(item => item.price).reduce((previousValue, currentValue) => previousValue + currentValue).toFixed(2) //2 decimals
             }
             
         case 'DELETE_ITEMS_FROM_CART':
