@@ -3,11 +3,11 @@ import ImageListItem from '@mui/material/ImageListItem';
 
 export const CartItem = ({itemsArray}) => {
     return(
-        itemsArray.map(item => {
+        itemsArray?.map((item, index) => {
             return(
-                <Grid container spacing={2} alignItems="center">
+                <Grid key={index} container spacing={2} alignItems="center">
                         <Grid key={item.image} item xs={4}>
-                            <ImageListItem key={item.image} sx={{ width: 50, height: 50 }}>
+                            <ImageListItem key={index} sx={{ width: 50, height: 50 }}>
                                 <img
                                     src={`${item.image}?w=50&h=50&fit=crop&auto=format`}
                                     alt={item.title}

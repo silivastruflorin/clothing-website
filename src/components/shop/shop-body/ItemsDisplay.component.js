@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
+import {useDispatch,useSelector} from 'react-redux'
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
@@ -13,14 +14,15 @@ import Typography from '@mui/material/Typography';
 
 import {connect} from 'react-redux';
 import {AddItemToCart} from '../../../redux/cart/cart.actions';
-import {RatingsSelector} from '../../../redux/selectors/selectors';
+import {RatingsSelector,ProductsSelector} from '../../../redux/selectors/selectors';
 
-let ItemsDisplay = ({productCategory,additem,getRatings,ratings}) => {
+let ItemsDisplay = ({productCategory, getRatings, isRetrevingData}) => {
   const [itemData, setItemsdata] = useState([]);
-  const [whenToUpdate, setwhenToUpdate] = useState(0);
   const [itemDataFiltered, setitemDataFiltered] = useState([]);
+  let ratings = useSelector(RatingsSelector);
+  let products = useSelector(ProductsSelector);
 
-
+  const dispatch= useDispatch()
   //popOver
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -35,25 +37,20 @@ let ItemsDisplay = ({productCategory,additem,getRatings,ratings}) => {
   const open = Boolean(anchorEl);
 
   // end popOver
-  
-  // Similar to componentDidMount and componentDidUpdate:   //I WILL Replace it later with Saga middleware
-  useEffect(() => {
-    // Get data from API
-    fetch(`https://fakestoreapi.com/products/category/${productCategory}`)
-            .then(res=>res.json())
-            .then(json=>{
-              // console.log("received from server",json)
-              setItemsdata(json)
-              setitemDataFiltered(json) //initialize first with all items
-            })
-    
-},[whenToUpdate]); /*by passing the [whenToUpdate] we break the infinite loop of state update -sideeffect- rerender compoment.
-                  If whenToUpdate did not changed then useeffect does not executes.If we want the useEffect to execute only 
-                  on the component mount then we pass just an empty array [],
-                  We can use multiple useEfects on the same page.For example one when the component mounts (by passing []) and another one 
-                  where we can pass [someVariable,someAnotherVariable] and it will execute only when someVariable or someAnotherVariable will change
-                  If nothing is passed as a second argument for useEffect then will execute after each render (possible infinite loop-watch out)
-                  */
+
+useEffect(() => {
+        //Get products from api using SAGA
+        dispatch({type: 'GET_PRODUCTS_REQUEST', payload: productCategory });
+        // setitemDataFiltered(products);
+        // setItemsdata(products);
+},[productCategory]);
+ 
+useEffect(() => {
+  //Get products from api using SAGA
+  // dispatch({type: 'GET_PRODUCTS_REQUEST', payload: productCategory });
+  setitemDataFiltered(products);
+  setItemsdata(products);
+},[products]);
 
   const hangleSearch = (value) => {
     // set itemDataFiltered based on value from input box
@@ -63,20 +60,20 @@ let ItemsDisplay = ({productCategory,additem,getRatings,ratings}) => {
   return (
     <ImageList /*sx={{ width: 500, height: 450 }}*/ cols={4}>
     <ImageListItem key="Subheader" cols={4}>
-      <ListSubheader component="div">
+      <ListSubheader component="div" >
         {/* A search bar to be added here */}
         <Autocomplete 
-        sx={{ width: 300 }}
+        sx={{ width: 300}}
         id="free-solo-demo"
         freeSolo
-        options={itemData.map((option) => option.title)}
+        options={itemData?.map((option) => option.title)}
         renderInput={(params) => <TextField {...params} label="Search..." />}
         onSelect={(e)=> {hangleSearch(e.target.value.toString())}}
         onChange={(e)=> {hangleSearch(e.target.value.toString())} }
       />
         </ListSubheader>
     </ImageListItem>
-      {itemDataFiltered.map((item) => (
+      {itemDataFiltered?.map((item) => (
         <ImageListItem key={item.image} >
           <img
             src={`${item.image}`}
@@ -98,7 +95,7 @@ let ItemsDisplay = ({productCategory,additem,getRatings,ratings}) => {
               <IconButton
                 sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
                 aria-label={`info about ${item.title}`}
-                onClick={()=>additem(item)}
+                onClick={()=>dispatch(AddItemToCart(item))}
                 >
                  buy
               </IconButton>
@@ -125,10 +122,16 @@ let ItemsDisplay = ({productCategory,additem,getRatings,ratings}) => {
           onClose={handlePopoverClose}
           disableRestoreFocus
         >
-              <Typography sx={{ p: 1 }}>
-                Rating: {ratings.rate}
-                Stock: {ratings.count}
-              </Typography>
+         { 
+            isRetrevingData ? 'Loading...' : ( 
+                                              <Typography sx={{ p: 1 }}>
+                                              Rating: {ratings.rate} 
+                                              <span> </span> 
+                                              Stock: {ratings.count}
+                                             </Typography>
+                                             )
+          }
+             
         </Popover>
   </ImageList>  
   );
@@ -136,14 +139,14 @@ let ItemsDisplay = ({productCategory,additem,getRatings,ratings}) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-      additem : (item) => {dispatch(AddItemToCart(item))},
-      getRatings : (item)  => {dispatch({type: 'ITEM_INFO_REQUESTED', payload: item})} //saga action is dipatch
+      getRatings : (item)  => {dispatch({type: 'ITEM_INFO_REQUESTED', payload: item})} //saga action is dipatched
   }
 }
 
 const mapStateToProps = (state) => {
   return{
-    ratings: RatingsSelector(state)
+    //ratings: RatingsSelector(state),
+    isRetrevingData : state.cartkey.isRetrevingData //old way without using selectors
   }
 }
 

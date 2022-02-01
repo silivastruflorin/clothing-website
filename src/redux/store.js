@@ -1,4 +1,4 @@
-import { createStore, applyMiddleware } from "redux";
+import { createStore, applyMiddleware, compose } from "redux";
 
 /* 
     Action ---Middleware---> Root Reducer ---> Store ---> DOM Changes
@@ -21,11 +21,13 @@ export const history = createBrowserHistory();
 // Create the saga middleware
 const sagaMiddleware = createSagaMiddleware();
 
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
 //Set up middleware
 const middlewares = [logger,routerMiddleware(history),sagaMiddleware]; //we put all the middlewares that we use in an array
 
 //Create Store 
-const store = createStore(rootReducer(history), applyMiddleware(...middlewares)); //tackes the root reducer  and the middlewares as parameter
+const store = createStore(rootReducer(history), composeEnhancers(applyMiddleware(...middlewares))); //tackes the root reducer  and the middlewares as parameter
 
 // console.log(store.getState())
 

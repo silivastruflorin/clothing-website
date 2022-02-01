@@ -32,7 +32,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 
-let CustomizedBadges = ({numberOfItemsInCart,TotalPrice,cartItems}) => {
+let CustomizedBadges = ({numberOfItemsInCart, TotalPrice, cartItems}) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleClick = (event) => {
