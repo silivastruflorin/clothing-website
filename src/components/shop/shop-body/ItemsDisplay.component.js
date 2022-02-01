@@ -12,14 +12,15 @@ import Typography from '@mui/material/Typography';
 
 //User defined
 import {AddItemToCart} from '../../../redux/cart/cart.actions';
-import {RatingsSelector, ProductsSelector, selectIsRetreivedSelector} from '../../../redux/selectors/selectors';
+import {RatingsSelector, ProductsSelector, InfoIsRetreivedSelector, IsRetrevingProductsSelector} from '../../../redux/selectors/selectors';
 
 let ItemsDisplay = ({productCategory}) => {
   const [itemData, setItemsdata] = useState([]);
   const [itemDataFiltered, setitemDataFiltered] = useState([]);
   let ratings = useSelector(RatingsSelector);
   let products = useSelector(ProductsSelector);
-  let isRetrevingData = useSelector(selectIsRetreivedSelector);
+  let isRetrevingInfoProduct = useSelector(InfoIsRetreivedSelector);
+  let IsRetrevingProducts = useSelector(IsRetrevingProductsSelector);
 
   const dispatch= useDispatch()
   //popOver
@@ -47,9 +48,15 @@ let ItemsDisplay = ({productCategory}) => {
   useEffect(() => {
     //Get products from api using SAGA
     // dispatch({type: 'GET_PRODUCTS_REQUEST', payload: productCategory });
-    setitemDataFiltered(products);
-    setItemsdata(products);
-  },[products]);
+    if (!IsRetrevingProducts) {
+      setitemDataFiltered(products);
+      setItemsdata(products);
+    }
+    else{
+      setitemDataFiltered([]);
+      setItemsdata([]);
+    }
+  },[products,IsRetrevingProducts]);
 
   const hangleSearch = (value) => {
     // set itemDataFiltered based on value from input box
@@ -121,7 +128,7 @@ let ItemsDisplay = ({productCategory}) => {
           disableRestoreFocus
         >
          { 
-            isRetrevingData ? 'Loading...' : ( 
+            isRetrevingInfoProduct ? 'Loading...' : ( 
                                               <Typography sx={{ p: 1 }}>
                                               Rating: {ratings.rate} 
                                               <span> </span> 

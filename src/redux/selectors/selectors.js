@@ -3,7 +3,8 @@ import { createSelector } from '@reduxjs/toolkit';
 const selectCartItems = state => state.cartkey.cartItems;
 const selectRatings = state => state.cartkey.rating;
 const selectProducts = state => state.cartkey.productsOnPage;
-const selectIsRetreived = state => state.cartkey.isRetrevingData;
+const selectInfoIsRetreived = state => state.cartkey.isRetrevingInfoProduct;
+const selectIsRetrevingProducts = state => state.cartkey.isRetrevingProducts;
 
 
 
@@ -17,6 +18,7 @@ export const numberOfItemsSelector = createSelector(
 )
 export const RatingsSelector = createSelector(selectRatings,(ratigs)=> ratigs);
 export const ProductsSelector = createSelector(selectProducts,(products)=>  products);
-export const selectIsRetreivedSelector = createSelector(selectIsRetreived,(isRetrevingData)=>  isRetrevingData);
+export const InfoIsRetreivedSelector = createSelector(selectInfoIsRetreived,(isRetrevingInfoProduct)=>  isRetrevingInfoProduct);
+export const IsRetrevingProductsSelector = createSelector(selectIsRetrevingProducts,(isRetrevingProducts)=>  isRetrevingProducts);
 
 export const TotalPriceSelector = createSelector(CartItemsSelector,(items)=> items.length ? items.map(item => item.price).reduce((previousValue, currentValue) => previousValue + currentValue).toFixed(2) : null );

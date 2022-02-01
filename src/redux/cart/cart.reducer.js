@@ -4,8 +4,9 @@ const INITIAL_STATE = {
     // numberOfItemsInCart: 0,   //replaced by selectors
     // totalPrice: 0,           //replaced by selectors
     rating: [],    // used with saga to get Rating and count
-    isRetrevingData: false,
-    productsOnPage: []
+    isRetrevingInfoProduct: false,
+    productsOnPage: [],
+    isRetrevingProducts: false
 }
 
 const cartReducer = (state = INITIAL_STATE , action) => {
@@ -27,26 +28,33 @@ const cartReducer = (state = INITIAL_STATE , action) => {
         case 'ITEM_INFO_REQUESTED':
             return {
                 ...state,
-                isRetrevingData : true  //saga is retreiving data form api(loading)
+                isRetrevingInfoProduct : true  //saga is retreiving data form api(loading)
             }
         case 'ITEM_INFO_GET_SUCCESEED':
             // console.log(action.ratings)
             return {
                 ...state,
                 rating : action.ratings, //yelded by redux.sagas.js
-                isRetrevingData : false  //data was retreived using saga
+                isRetrevingInfoProduct : false  //data was retreived using saga
             }
             
         case 'ITEM_INFO_GET_FAILED':
             console.log(action.payload)
             return state;
         
+         //Saga actions: see file redux.sagas.js
+        case 'GET_PRODUCTS_REQUEST':
+            return {
+                ...state,
+                isRetrevingProducts : true  //saga is retreiving data form api(loading)
+            }
 
         case 'GET_PRODUCTS_REQUEST_SUCCESEED':
             // console.log(action.ratings)
             return {
                 ...state,
                 productsOnPage: action.products, //yelded by redux.sagas.js
+                isRetrevingProducts : false  //saga is retreiving data form api(loading)
             }
             
         case 'GET_PRODUCTS_REQUEST_FAILED':
