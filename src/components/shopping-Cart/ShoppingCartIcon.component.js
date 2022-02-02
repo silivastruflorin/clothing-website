@@ -12,6 +12,7 @@ import { connect, useSelector } from 'react-redux';
 //User defined
 import {CartItem} from '../shop/cart-Item/cart-item.component';
 import {CartItemsSelector, numberOfItemsSelector, TotalPriceSelector} from './../../redux/selectors/selectors';
+import { Box } from '@mui/material';
 
 
 
@@ -48,11 +49,11 @@ let CustomizedBadges = () => {
   };
 
   const open = Boolean(anchorEl);
-  const id = open ? 'simple-popover' : undefined;
+  const id = open ? 'simple-popover' : null;
 
   return (
-    <div>
-      <IconButton aria-label="cart" onClick={handleClick}>
+    <>
+    <IconButton aria-label="cart" onClick={handleClick}>
       <StyledBadge badgeContent={numberOfItemsInCart} color="secondary">
         <ShoppingCartIcon />
       </StyledBadge>
@@ -67,7 +68,7 @@ let CustomizedBadges = () => {
           horizontal: 'left',
         }}
       >
-        <Typography sx={{ p: 2 }}>
+        <Box sx={{ p: 2 }}>
           {
             numberOfItemsInCart !== 0 ? 
                                         <Stack spacing={1}>
@@ -82,9 +83,9 @@ let CustomizedBadges = () => {
                                         </Stack>
                                       : "Cart is empty"
             }
-        </Typography>
+        </Box>
       </Popover>
-    </div>
+    </>
    
 
    
