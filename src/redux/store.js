@@ -29,7 +29,7 @@ const middlewares = [logger,routerMiddleware(history),sagaMiddleware]; //we put 
 //Create Store 
 const store = createStore(rootReducer(history), composeEnhancers(applyMiddleware(...middlewares))); //tackes the root reducer  and the middlewares as parameter
 
-// console.log(store.getState())
+console.log(store.getState())
 
 // Then run the saga
 sagaMiddleware.run(mySaga)

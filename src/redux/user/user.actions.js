@@ -6,6 +6,8 @@ action format is an object for example   {
                                         }
 */
 
+import { getAction } from "connected-react-router"
+
 export const SetCurrentUser = user => {
     return (
         {
@@ -15,3 +17,7 @@ export const SetCurrentUser = user => {
 
     )
 } 
+
+
+dispatch(increment(payload))
+action.payload

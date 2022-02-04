@@ -1,9 +1,16 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
+import {
+         ITEM_INFO_REQUESTED, 
+         ITEM_INFO_GET_SUCCESEED,
+         ITEM_INFO_GET_FAILED,
+         GET_PRODUCTS_REQUEST,
+         GET_PRODUCTS_REQUEST_SUCCESEED,
+         GET_PRODUCTS_REQUEST_FAILED} from '../cart/cart.reducer.slice';
 
 //implement watcher 
 export default function* mySaga() {
-    yield takeEvery("ITEM_INFO_REQUESTED", fetchItemInfo);
-    yield takeEvery("GET_PRODUCTS_REQUEST", fetchProducts);
+    yield takeEvery(ITEM_INFO_REQUESTED, fetchItemInfo);
+    yield takeEvery(GET_PRODUCTS_REQUEST, fetchProducts);
 }
 
 //implement workers
@@ -25,9 +32,9 @@ function* fetchItemInfo(action) {
         
        const item = yield call(ApiSingleProduct, action.payload.id); //gets passed to API as args
     //    console.log(item.rating)
-       yield put({type: "ITEM_INFO_GET_SUCCESEED", ratings: item.rating});    //action will be implemented on cart reducer {type:'',ratings:{}} instead of payload we use directly ratings
+       yield put(ITEM_INFO_GET_SUCCESEED(item.rating));    //action will be implemented on cart reducer {type:'',ratings:{}} instead of payload we use directly ratings
     } catch (e) {
-       yield put({type: "ITEM_INFO_GET_FAILED", message: e.message});
+       yield put(ITEM_INFO_GET_FAILED(e.message));
     }
  }
 
@@ -37,8 +44,8 @@ function* fetchItemInfo(action) {
        
       const products = yield call(ApiAllProductsFromCategory, action.payload); //gets passed to API as args
    //    console.log(item.rating)
-      yield put({type: "GET_PRODUCTS_REQUEST_SUCCESEED", products});    //action will be implemented on cart reducer {type:'',products:{}} instead of payload we use directly ratings
+      yield put(GET_PRODUCTS_REQUEST_SUCCESEED(products));    //action will be implemented on cart reducer {type:'',products:{}} instead of payload we use directly ratings
    } catch (e) {
-      yield put({type: "GET_PRODUCTS_REQUEST_FAILED", message: e.message});
+      yield put(GET_PRODUCTS_REQUEST_FAILED(e.message));
    }
 }

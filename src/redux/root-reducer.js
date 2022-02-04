@@ -21,8 +21,8 @@ import { connectRouter } from 'connected-react-router' // for navigation
                             
 */
 import userReducer from "./user/user.reducer";
-import cartReducer from "./cart/cart.reducer";
-
+// import cartReducer from "./cart/cart.reducer";    // replace with the shopSlice reducer
+import shopSlice from './cart/cart.reducer.slice';
 
 const rootReducer = (history) => combineReducers(
     {
@@ -33,7 +33,7 @@ const rootReducer = (history) => combineReducers(
                                                                 }
                                                     
                                                     } */
-        cartkey : cartReducer
+        cartkey : shopSlice
     }
 )
 

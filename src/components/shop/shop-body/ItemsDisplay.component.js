@@ -11,16 +11,15 @@ import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 
 //User defined
-import {AddItemToCart} from '../../../redux/cart/cart.actions';
-import {RatingsSelector, ProductsSelector, InfoIsRetreivedSelector, IsRetrevingProductsSelector} from '../../../redux/selectors/selectors';
+// import { AddItemToCart} from '../../../redux/cart/cart.actions';  //REPLACED BY SHOPSLICE
+import { RatingsSelector, ProductsSelector, InfoIsRetreivedSelector, IsRetrevingProductsSelector} from '../../../redux/selectors/selectors';
+import { ADD_ITEMS_TO_CART, GET_PRODUCTS_REQUEST, ITEM_INFO_REQUESTED } from '../../../redux/cart/cart.reducer.slice';
 
 let ItemsDisplay = ({productCategory}) => {
-  const [itemData, setItemsdata] = useState([]);
-  const [itemDataFiltered, setitemDataFiltered] = useState([]);
+  const [filter, setFilter] = useState('');
   let ratings = useSelector(RatingsSelector);
   let products = useSelector(ProductsSelector);
   let isRetrevingInfoProduct = useSelector(InfoIsRetreivedSelector);
-  let IsRetrevingProducts = useSelector(IsRetrevingProductsSelector);
 
   const dispatch= useDispatch()
   //popOver
@@ -39,29 +38,9 @@ let ItemsDisplay = ({productCategory}) => {
   // end popOver
 
   useEffect(() => {
-          //Get products from api using SAGA
-          dispatch({type: 'GET_PRODUCTS_REQUEST', payload: productCategory });
-          // setitemDataFiltered(products);
-          // setItemsdata(products);
+          dispatch(GET_PRODUCTS_REQUEST(productCategory));
   },[productCategory]);
   
-  useEffect(() => {
-    //Get products from api using SAGA
-    // dispatch({type: 'GET_PRODUCTS_REQUEST', payload: productCategory });
-    if (!IsRetrevingProducts) {
-      setitemDataFiltered(products);
-      setItemsdata(products);
-    }
-    else{
-      setitemDataFiltered([]);
-      setItemsdata([]);
-    }
-  },[products,IsRetrevingProducts]);
-
-  const hangleSearch = (value) => {
-    // set itemDataFiltered based on value from input box
-    setitemDataFiltered(itemData.filter(item => item.title.toUpperCase().includes(value.toUpperCase())));
-  }
 
   return (
     <ImageList /*sx={{ width: 500, height: 450 }}*/ cols={4}>
@@ -72,14 +51,14 @@ let ItemsDisplay = ({productCategory}) => {
         sx={{ width: 300}}
         id="free-solo-demo"
         freeSolo
-        options={itemData?.map((option) => option.title)}
+        options={products?.map((option) => option.title)}
         renderInput={(params) => <TextField {...params} label="Search..." />}
-        onSelect={(e)=> {hangleSearch(e.target.value.toString())}}
-        onChange={(e)=> {hangleSearch(e.target.value.toString())} }
+        onSelect={(e)=> setFilter(e.target.value.toString())}
+        onChange={(e)=> setFilter(e.target.value.toString())}
       />
         </ListSubheader>
     </ImageListItem>
-      {itemDataFiltered?.map((item) => (
+      {products?.filter(item => item.title.toUpperCase().includes(filter?.toUpperCase())).map((item) => (
         <ImageListItem key={item.image} >
           <img
             src={`${item.image}`}
@@ -91,7 +70,7 @@ let ItemsDisplay = ({productCategory}) => {
             title={item.title}
             subtitle={`${item.price} Euro`}
             onMouseEnter={
-              ()=> dispatch({type: 'ITEM_INFO_REQUESTED', payload: item})
+              ()=> dispatch(ITEM_INFO_REQUESTED(item))
             }
             onMouseOver={handlePopoverOpen}
             onMouseLeave={
@@ -101,7 +80,7 @@ let ItemsDisplay = ({productCategory}) => {
               <IconButton
                 sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
                 aria-label={`info about ${item.title}`}
-                onClick={()=>dispatch(AddItemToCart(item))}
+                onClick={()=>dispatch(ADD_ITEMS_TO_CART(item))}
                 >
                  buy
               </IconButton>
