@@ -10,13 +10,13 @@ export const CardSmallContainer = (props) => {
         <Container maxWidth="xl">
             <Grid container spacing={2} columns={12}>
                 <Grid item xs={4}>
-                    <CardComponent size={300} imageId={281}  description={'Street wear'} />
+                    <CardComponent size={300} imageId={281}  description={'Street wear'} page="/shop/StreetWear" />
                 </Grid>
                 <Grid item xs={4}>
-                    <CardComponent size={300} imageId={604} description={'Boots'}/>
+                    <CardComponent size={300} imageId={604} description={'Boots'} page="/shop/Boots"/>
                 </Grid>
                 <Grid item xs={4}>
-                    <CardComponent size={300} imageId={22} description={'Casual'}/>
+                    <CardComponent size={300} imageId={22} description={'Casual'} page="/shop/Casual"/>
                 </Grid>
             </Grid>
         </Container>

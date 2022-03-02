@@ -4,7 +4,6 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/material/Menu';
 import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -13,23 +12,26 @@ import MenuItem from '@mui/material/MenuItem';
 import Grid from '@mui/material/Grid';
 
 import CustomizedBadges from '../../components/shopping-Cart/ShoppingCartIcon.component';
-import { connect } from 'react-redux';
+import { IsLoggedInSelector } from '../../redux/selectors/selectors'
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import { push } from 'connected-react-router';
 
-const pages = ['Products', 'Pricing', 'Blog'];
+const pages = ['TBA1', 'TBA2', 'TBA3'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-let HeaderComponent = ({push}) => {
+let HeaderComponent = () => {
+  const dispatch = useDispatch();
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
+  let loggedIn = useSelector(IsLoggedInSelector);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
     console.log(event.currentTarget)
   };
   const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
+    setAnchorElUser(event.currentTarget);   
     
   };
 
@@ -50,9 +52,9 @@ let HeaderComponent = ({push}) => {
             noWrap
             component="div"
             sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
-            onClick={()=> push('/')}
+            onClick={()=> dispatch(push('/'))}
           >
-            LOGO HERE
+            LOGO HERE(Home)
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <Menu
@@ -107,7 +109,7 @@ let HeaderComponent = ({push}) => {
             </Grid>
             <Grid item xs>
               <Tooltip title="Open settings">
-                <IconButton onClick={e => handleOpenUserMenu(e)} sx={{ p: 0 }}>
+                <IconButton onClick={e => loggedIn ? handleOpenUserMenu(e) : dispatch(push("/user/SignIn"))} sx={{ p: 0 }}>
                   <Avatar alt="Remy Sharp" src="https://picsum.photos/id/1010/100/100" />
                 </IconButton>
                </Tooltip>
@@ -142,11 +144,11 @@ let HeaderComponent = ({push}) => {
   );
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-      push: (page) => dispatch(push(page))
-  }
-}
+// const mapDispatchToProps = dispatch => {
+//   return {
+//       push: (page) => dispatch(push(page))
+//   }
+// // }
 
-HeaderComponent = connect(null,mapDispatchToProps)(HeaderComponent);
+// HeaderComponent = connect(null,mapDispatchToProps)(HeaderComponent);
 export {HeaderComponent};

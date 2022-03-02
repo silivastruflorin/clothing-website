@@ -20,14 +20,15 @@ import { connectRouter } from 'connected-react-router' // for navigation
                             {currentUser:null}   {someShopState:null}      {someAnotherState:null}
                             
 */
-import userReducer from "./user/user.reducer";
-// import cartReducer from "./cart/cart.reducer";    // replace with the shopSlice reducer
+// import userReducer from "./user/user.reducer"; // replaced with the shopSlice reducer
+import UserSlice from "./user/userSlice.reducer"; 
+// import cartReducer from "./cart/cart.reducer";    // replaced with the shopSlice reducer
 import shopSlice from './cart/cart.reducer.slice';
 
 const rootReducer = (history) => combineReducers(
     {
         router: connectRouter(history),
-        userkey: userReducer,      /* returns an object {
+        userkey: UserSlice,      /* returns an object {
                                                         userkey: {
                                                                     currentUser : null
                                                                 }

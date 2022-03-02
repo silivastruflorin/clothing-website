@@ -13,13 +13,14 @@ import Typography from '@mui/material/Typography';
 //User defined
 // import { AddItemToCart} from '../../../redux/cart/cart.actions';  //REPLACED BY SHOPSLICE
 import { RatingsSelector, ProductsSelector, InfoIsRetreivedSelector, IsRetrevingProductsSelector} from '../../../redux/selectors/selectors';
-import { ADD_ITEMS_TO_CART, GET_PRODUCTS_REQUEST, ITEM_INFO_REQUESTED } from '../../../redux/cart/cart.reducer.slice';
+import { ADD_ITEMS_TO_CART, ITEM_INFO_REQUESTED } from '../../../redux/cart/cart.reducer.slice';
 
-let ItemsDisplay = ({productCategory}) => {
+let ItemsDisplay = () => {
   const [filter, setFilter] = useState('');
   let ratings = useSelector(RatingsSelector);
   let products = useSelector(ProductsSelector);
   let isRetrevingInfoProduct = useSelector(InfoIsRetreivedSelector);
+  let isRetrevingProducts = useSelector(IsRetrevingProductsSelector);
 
   const dispatch= useDispatch()
   //popOver
@@ -35,12 +36,7 @@ let ItemsDisplay = ({productCategory}) => {
 
   const open = Boolean(anchorEl);
 
-  // end popOver
-
-  useEffect(() => {
-          dispatch(GET_PRODUCTS_REQUEST(productCategory));
-  },[productCategory]);
-  
+  // end popOver 
 
   return (
     <ImageList /*sx={{ width: 500, height: 450 }}*/ cols={4}>
@@ -58,7 +54,7 @@ let ItemsDisplay = ({productCategory}) => {
       />
         </ListSubheader>
     </ImageListItem>
-      {products?.filter(item => item.title.toUpperCase().includes(filter?.toUpperCase())).map((item) => (
+      { !isRetrevingProducts  && products?.filter(item => item.title.toUpperCase().includes(filter?.toUpperCase())).map((item) => (
         <ImageListItem key={item.image} >
           <img
             src={`${item.image}`}

@@ -7,16 +7,23 @@ import { HeaderComponent } from './components/header/header.component';
 import HomePage from './pages/home/Home-Page';
 import MensPage from './pages/shop/mens-page/Mens-Page';
 import WomensPage from './pages/shop/women-page/Women-Page';
-import  ErrorPage  from './pages/error-page/ErrorPage';
+import ErrorPage  from './pages/error-page/ErrorPage';
+import LogInPage  from './pages/user/Login-Page';
+import Loading  from '../src/components/loading/loading';
+
 
 //Import used for Redux
 import { Provider } from 'react-redux';
 import store, { history } from './redux/store';
 
 import reportWebVitals from './reportWebVitals'; 
-
+//Connected Router
 import { Route, Switch } from 'react-router' // react-router v4/v5
 import { ConnectedRouter } from 'connected-react-router'
+import Casual from './pages/shop/casual/casual';
+import StreetWear from './pages/shop/street-wear/street-wear';
+import Boots from './pages/shop/boots/boots';
+
 
 ReactDOM.render(
   <Provider store={store}>
@@ -27,6 +34,10 @@ ReactDOM.render(
           <Route exact path="/" component={HomePage} />
           <Route  path="/shop/MensPage" component={MensPage} />
           <Route  path="/shop/WomensPage" component={WomensPage} />
+          <Route  path="/user/SignIn" component={LogInPage} />
+          <Route  path="/shop/Boots" component={Boots} />
+          <Route  path="/shop/StreetWear" component={StreetWear} />
+          <Route  path="/shop/Casual" component={Casual} />
           <Route path="" component={ErrorPage} />
         </Switch>
       </>
