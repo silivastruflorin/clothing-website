@@ -40,6 +40,11 @@ function Dashboard(){
         // console.log('useEffect called')
         store.reducerManager.add("counterSlice", counterSlice);
         
+        // return function cleanUp() {
+        //     //executes when the component dismounts
+        //     store.reducerManager.remove("counterSlice");
+        // }
+
     },[])
     
 
