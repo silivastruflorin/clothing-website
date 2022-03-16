@@ -12,11 +12,10 @@ import { createBrowserHistory } from 'history';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 import createSagaMiddleware from 'redux-saga';
 //User defined
-import rootReducer from './root-reducer'
 import mySaga from './../saga/redux.sagas';
 import { configureStore } from "./configureStore";
 import userSliceReducer from "../reducers/user/userSlice.reducer";
-import shopSlice from '../reducers/cart/cart.reducer';
+import shopSlice from '../reducers/cart/cart.reducer.slice';
 
 //used for navigation (connected-react-router)
 export const history = createBrowserHistory();
@@ -28,12 +27,19 @@ const middlewares = [logger, routerMiddleware(history), sagaMiddleware]; //we pu
 //these reducers will be loaded at application start-up
 const staticReducers = {
         router: connectRouter(history),
-        userkey: userSliceReducer,     
-        cartkey : shopSlice,
+        UserReducer: userSliceReducer,    //name of the reducer given in the slice : reducer
+        shopReducer : shopSlice,          //name of the reducer given in the slice : reducer
 }
 
 //Create Store 
-const store = configureStore(middlewares,staticReducers);
+const store = configureStore(middlewares, staticReducers);
+
+/*
+To add a new reducer, one can now call store.reducerManager.add("asyncState", asyncReducer).
+
+To remove a reducer, one can now call store.reducerManager.remove("asyncState")
+*/
+
 
 // Then run the saga
 sagaMiddleware.run(mySaga)

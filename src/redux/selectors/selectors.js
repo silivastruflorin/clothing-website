@@ -1,12 +1,12 @@
 import { createSelector } from '@reduxjs/toolkit';
 
-const selectCartItems = state => state.cartkey.cartItems;
-const selectRatings = state => state.cartkey.rating;
-const selectProducts = state => state.cartkey.productsOnPage;
-const selectInfoIsRetreived = state => state.cartkey.isRetrevingInfoProduct;
-const selectIsRetrevingProducts = state => state.cartkey.isRetrevingProducts;
-const selectIsLoggedIn = state => state.userkey.loggedIn;
-const selectCurrentUser = state => state.userkey.currentUser;
+const selectCartItems = state => state.shopReducer.cartItems;
+const selectRatings = state => state.shopReducer.rating;
+const selectProducts = state => state.shopReducer.productsOnPage;
+const selectInfoIsRetreived = state => state.shopReducer.isRetrevingInfoProduct;
+const selectIsRetrevingProducts = state => state.shopReducer.isRetrevingProducts;
+const selectIsLoggedIn = state => state.UserReducer.loggedIn;
+const selectCurrentUser = state => state.UserReducer.currentUser;
 
 
 export const CartItemsSelector = createSelector(selectCartItems,(test)=>  test);

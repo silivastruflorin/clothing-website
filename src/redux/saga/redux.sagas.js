@@ -6,14 +6,14 @@ ITEM_INFO_GET_SUCCESEED,
 ITEM_INFO_GET_FAILED,
 GET_PRODUCTS_REQUEST,
 GET_PRODUCTS_REQUEST_SUCCESEED,
-GET_PRODUCTS_REQUEST_FAILED} from './../reducers/cart/cart.reducer.slice';
+GET_PRODUCTS_REQUEST_FAILED} from '../reducers/cart/cart.reducer.slice';
 //user actions
 import {AUTH_REUEST,
        AUTH_REUEST_SUCCESEED, 
        AUTH_REUEST_FAILED, 
        AUTH_LOGOUT_REQ, 
        AUTH_LOGOUT_REQ_SUCCESS,
-       AUTH_LOGOUT_REQ_FAILED } from './../reducers/user/userSlice.reducer'
+       AUTH_LOGOUT_REQ_FAILED } from '../reducers/user/userSlice.reducer';
 
 //firebase
 // Import the functions you need from the SDKs you need
@@ -74,7 +74,6 @@ function* fetchItemInfo(action) {
    try {
        
       const products = yield call(ApiAllProductsFromCategory, action.payload); //gets passed to API as args
-   //    console.log(item.rating)
       yield put(GET_PRODUCTS_REQUEST_SUCCESEED(products));    //action will be implemented on cart reducer {type:'',products:{}} instead of payload we use directly ratings
    } catch (e) {
       yield put(GET_PRODUCTS_REQUEST_FAILED(e.message));
