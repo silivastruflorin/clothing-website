@@ -1,3 +1,4 @@
+import { combineReducers } from "redux";
 export function createReducerManager(initialReducers) {
     // Create an object which maps keys to reducers
     const reducers = { ...initialReducers }

@@ -1,5 +1,3 @@
-import { createStore, applyMiddleware, compose } from "redux";
-
 /* 
     Action ---Middleware---> Root Reducer ---> Store ---> DOM Changes
 
@@ -11,36 +9,37 @@ import { createStore, applyMiddleware, compose } from "redux";
 
 import logger from "redux-logger"; //middleware that will be used later to debug code 
 import { createBrowserHistory } from 'history';
-import { routerMiddleware } from 'connected-react-router';
-
-
+import { connectRouter, routerMiddleware } from 'connected-react-router';
 import createSagaMiddleware from 'redux-saga';
 //User defined
 import rootReducer from './root-reducer'
 import mySaga from './../saga/redux.sagas';
+import { configureStore } from "./configureStore";
+import userSliceReducer from "../reducers/user/userSlice.reducer";
+import shopSlice from '../reducers/cart/cart.reducer';
 
-
+//used for navigation (connected-react-router)
 export const history = createBrowserHistory();
 // Create the saga middleware
 const sagaMiddleware = createSagaMiddleware();
-
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
 //Set up middleware
-const middlewares = [logger,routerMiddleware(history),sagaMiddleware]; //we put all the middlewares that we use in an array
+const middlewares = [logger, routerMiddleware(history), sagaMiddleware]; //we put all the middlewares that we use in an array
+
+//these reducers will be loaded at application start-up
+const staticReducers = {
+        router: connectRouter(history),
+        userkey: userSliceReducer,     
+        cartkey : shopSlice,
+}
 
 //Create Store 
-const store = createStore(rootReducer(history), composeEnhancers(applyMiddleware(...middlewares))); //tackes the root reducer  and the middlewares as parameter
-
-console.log(store.getState())
+const store = configureStore(middlewares,staticReducers);
 
 // Then run the saga
 sagaMiddleware.run(mySaga)
 
 
-
-
-
+// console.log(store.getState())
 export default store;
 
 
