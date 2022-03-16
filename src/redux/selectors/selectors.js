@@ -6,7 +6,7 @@ const selectProducts = state => state.cartkey.productsOnPage;
 const selectInfoIsRetreived = state => state.cartkey.isRetrevingInfoProduct;
 const selectIsRetrevingProducts = state => state.cartkey.isRetrevingProducts;
 const selectIsLoggedIn = state => state.userkey.loggedIn;
-
+const selectCurrentUser = state => state.userkey.currentUser;
 
 
 export const CartItemsSelector = createSelector(selectCartItems,(test)=>  test);
@@ -25,3 +25,4 @@ export const TotalPriceSelector = createSelector(CartItemsSelector,(items)=> ite
 
 
 export const IsLoggedInSelector = createSelector(selectIsLoggedIn,(loggedIn)=>  loggedIn);
+export const CurrentUserSelector = createSelector(selectCurrentUser,(user)=>  user);

@@ -6,14 +6,19 @@ ITEM_INFO_GET_SUCCESEED,
 ITEM_INFO_GET_FAILED,
 GET_PRODUCTS_REQUEST,
 GET_PRODUCTS_REQUEST_SUCCESEED,
-GET_PRODUCTS_REQUEST_FAILED} from '../cart/cart.reducer.slice';
+GET_PRODUCTS_REQUEST_FAILED} from './../reducers/cart/cart.reducer.slice';
 //user actions
-import {AUTH_REUEST, AUTH_REUEST_SUCCESEED, AUTH_REUEST_FAILED} from '../user/userSlice.reducer'
+import {AUTH_REUEST,
+       AUTH_REUEST_SUCCESEED, 
+       AUTH_REUEST_FAILED, 
+       AUTH_LOGOUT_REQ, 
+       AUTH_LOGOUT_REQ_SUCCESS,
+       AUTH_LOGOUT_REQ_FAILED } from './../reducers/user/userSlice.reducer'
 
 //firebase
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, signOut  } from "firebase/auth";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -36,6 +41,7 @@ export default function* mySaga() {
     yield takeEvery(ITEM_INFO_REQUESTED, fetchItemInfo);
     yield takeEvery(GET_PRODUCTS_REQUEST, fetchProducts);
     yield takeEvery(AUTH_REUEST, authentificationWorker);
+    yield takeEvery(AUTH_LOGOUT_REQ, DeAuthentificationWorker);
 
 }
 
@@ -96,4 +102,24 @@ function* authentificationWorker(action) {
    }
    // 
    //
+}
+
+function* DeAuthentificationWorker(action) {
+   let loggedOut = false;
+   const auth = getAuth();
+   try{
+      signOut(auth).then(() => {
+         console.log("logged out")
+        // Sign-out successful.
+         loggedOut = true;
+      }).catch((error) => {
+        // An error happened.
+         throw error;
+      });
+      yield put(AUTH_LOGOUT_REQ_SUCCESS())
+   }catch(e){
+     yield put(AUTH_LOGOUT_REQ_FAILED(e));
+   }
+   
+
 }

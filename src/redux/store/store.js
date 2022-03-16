@@ -12,10 +12,13 @@ import { createStore, applyMiddleware, compose } from "redux";
 import logger from "redux-logger"; //middleware that will be used later to debug code 
 import { createBrowserHistory } from 'history';
 import { routerMiddleware } from 'connected-react-router';
-import rootReducer from './root-reducer'; //file that we created
+
+
 import createSagaMiddleware from 'redux-saga';
 //User defined
-import mySaga from './saga/redux.sagas';
+import rootReducer from './root-reducer'
+import mySaga from './../saga/redux.sagas';
+
 
 export const history = createBrowserHistory();
 // Create the saga middleware
@@ -33,6 +36,9 @@ console.log(store.getState())
 
 // Then run the saga
 sagaMiddleware.run(mySaga)
+
+
+
 
 
 export default store;

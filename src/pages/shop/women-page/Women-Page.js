@@ -6,7 +6,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import {CartItemsSelector,numberOfItemsSelector,TotalPriceSelector} from '../../../redux/selectors/selectors';
 import ItemsDisplay from '../../../components/shop/shop-body/ItemsDisplay.component';
 import Container from '@mui/material/Container';
-import { GET_PRODUCTS_REQUEST } from '../../../redux/cart/cart.reducer.slice';
+import { GET_PRODUCTS_REQUEST } from '../../../redux/reducers/cart/cart.reducer.slice';
 import {IsRetrevingProductsSelector} from '../../../redux/selectors/selectors';
 
 
