@@ -15,12 +15,13 @@ import DisplayMotionContainer from "./containers/display-motion-container";
 //Material UI
 import { Grid } from "@material-ui/core";
 import JointStatusContainer from "./containers/joint-status-container";
+import MessageWarningContainer from "./containers/message-warning-container";
 
 const DashboardList = ({dispatch}) => {
     return(
         <span>
-            This is Another component that receives 
-            <button onClick={()=> dispatch(increment()) }>aaaa</button>
+            This is Another component that dispatches increment action
+            <button onClick={()=> dispatch(increment()) }>increment</button>
         </span>
     )
 }
@@ -40,10 +41,12 @@ function Dashboard(){
         // console.log('useEffect called')
         store.reducerManager.add("counterSlice", counterSlice);
         
-        // return function cleanUp() {
-        //     //executes when the component dismounts
-        //     store.reducerManager.remove("counterSlice");
-        // }
+        return function cleanUp() {
+            //executes when the component dismounts
+            //Optionally remove Component's reducer after is dismounted from the state
+            store.reducerManager.remove("counterSlice");
+            // console.log("Component dismounted")
+        }
 
     },[])
     
@@ -51,12 +54,10 @@ function Dashboard(){
     return(
         <>
             <div> 
-                Dashboard
-                {value}
+                <DashboardList dispatch={dispatch}/>
+                <span> Count Value:{value} </span>
+                 
             </div>
-            <DashboardList dispatch={dispatch}/>
-
-
             <StatusHeaderContainer />
 
             {/* 
@@ -77,9 +78,9 @@ function Dashboard(){
                 </Grid>
             </Grid>
 
-            {/* 
-                Grid to hold the console
-            */}
+            {/* Grid to hold the console */}
+            <MessageWarningContainer />
+            
          
 
         
