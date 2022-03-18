@@ -3,20 +3,23 @@ import React from "react";
 //Logic
 
 //Components
-
+import JointStatusComponent from "../../components/joint-status-component/joint-status-component";
 //Material UI
 import Container from '@mui/material/Container';
-import Box from '@mui/material/Box';
+
+
 
 const JointStatusContainer = () => {
     //some use state / hooks
     return (
         <Container >
             <span>This is the JointStatus Container</span>
-            <Box sx={{ bgcolor: 'purple', height: '25vh' }} >sdsdsd</Box>
-            <Box sx={{ bgcolor: 'blue', height: '25vh' }} >sdsdsd</Box>
-            <Box sx={{ bgcolor: '#cfe8fc', height: '25vh' }} >sdsdsd</Box>
-            <Box sx={{ bgcolor: 'red', height: '25vh' }} >sdsdsd</Box>
+            <JointStatusComponent jointName='Wrist 3 Joint'  status='Healty' />
+            <JointStatusComponent jointName='Wrist 2 Joint'  status='Error'/>
+            <JointStatusComponent jointName='Wrist 1 Joint'  status='Healty'/>
+            <JointStatusComponent jointName='Elbow Joint'    status='Error'/>
+            <JointStatusComponent jointName='Shoulder Joint' status='Healty'/>
+            <JointStatusComponent jointName='Base Joint'     status='Error'/>
         </Container>
     )
 }

@@ -28,8 +28,10 @@ const DashboardList = ({dispatch}) => {
 
 
 function Dashboard(){
-        const dispatch = useDispatch()
+        const dispatch = useDispatch();
+        store.reducerManager.add("counterSlice", counterSlice);
         const value = useSelector(counterSelector);
+
         /* 
         const [state , dispatch] = useReducer(counterSlice,{ value: 0 }); 
         Changed from local state to redux store
@@ -39,12 +41,10 @@ function Dashboard(){
     */
     useEffect(()=>{
         // console.log('useEffect called')
-        store.reducerManager.add("counterSlice", counterSlice);
-        
         return function cleanUp() {
             //executes when the component dismounts
             //Optionally remove Component's reducer after is dismounted from the state
-            store.reducerManager.remove("counterSlice");
+            // store.reducerManager.remove("counterSlice");
             // console.log("Component dismounted")
         }
 
@@ -64,15 +64,15 @@ function Dashboard(){
                 Grid to hold container components actions/display motion/ joint status
             */}
             <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-                <Grid item xs={2} sm={2} md={3} style={{background: 'red', width:'auto'}} >
+                <Grid item xs={4} sm={4} md={3} style={{background: 'red', width:'auto'}} >
                     {/* actions container */}
                     <ActionsContainer />
                 </Grid>
-                <Grid item xs={2} sm={4} md={6}  style={{background: 'aqua', width:'auto'}}>
+                <Grid item xs={4} sm={4} md={6}  style={{background: 'aqua', width:'auto'}}>
                     {/* display motion container */}
                     <DisplayMotionContainer />
                 </Grid>
-                <Grid item xs={2} sm={2} md={3}  style={{background: 'yellow', width:'auto'}}>
+                <Grid item xs={4} sm={4} md={3}  style={{background: 'yellow', width:'auto'}}>
                     {/* joint Status Container */}
                     <JointStatusContainer />
                 </Grid>

@@ -3,32 +3,44 @@ import React from "react";
 //Logic: reducers..
 
 //components
-import CellComponent  from '../../components/cell-component/index';
-import MessageWarningComponent  from '../../components/message-warning-component/index';
+import AlarmTableComponent from "../../components/alarm-table-component";
 //Material UI
-import { Grid } from "@material-ui/core";
+import Container from '@mui/material/Container';
 
+
+const testAlarms = [
+    {
+        message:'Connection error',
+        date:'17.03.2022',
+        action:'please check the ethernet connection'
+    },
+    {
+        message:'System error',
+        date:'16.03.2022',
+        action:'please check the CPU'
+    },
+    {
+        message:'System error',
+        date:'16.03.2022',
+        action:'please check the CPU'
+    },
+    {
+        message:'System error',
+        date:'16.03.2022',
+        action:'please check the CPU'
+    }
+    
+]
 
 const MessageWarningContainer = () => {
     //some use state / hooks
     return (
         <>
-            {/* Header for the container */}
-            <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }} style={{backgroundColor:'grey'}}>
-                <Grid item xs={2} sm={2} md={4} >
-                    <CellComponent staticText='Message' value='' />
-                </Grid>
-                <Grid item xs={2} sm={2} md={4} >
-                    <CellComponent staticText='Date' value='' />
-                </Grid>
-                <Grid item xs={2} sm={2} md={4} >
-                    <CellComponent staticText='Action' value='' />
-                </Grid>
-            </Grid>   
-
+         <Container maxWidth='auto' >
             {/* Alarm tabel content */}
-            <MessageWarningComponent message='Connection error' date='17.03.2022' action='please check the ethernet connection' />
-            <MessageWarningComponent message='System error' date='16.03.2022' action='please check the CPU' />
+            <AlarmTableComponent rows={testAlarms} />
+         </Container>
+           
         </>
     )
 }
