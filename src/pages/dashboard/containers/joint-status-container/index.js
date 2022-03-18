@@ -15,7 +15,7 @@ const JointStatusContainer = () => {
         <Container >
             <span>This is the JointStatus Container</span>
             <JointStatusComponent jointName='Wrist 3 Joint'  status='Healty' />
-            <JointStatusComponent jointName='Wrist 2 Joint'  status='Error'/>
+            <JointStatusComponent jointName='Wrist 2 Joint'  status='Healty'/>
             <JointStatusComponent jointName='Wrist 1 Joint'  status='Healty'/>
             <JointStatusComponent jointName='Elbow Joint'    status='Error'/>
             <JointStatusComponent jointName='Shoulder Joint' status='Healty'/>
