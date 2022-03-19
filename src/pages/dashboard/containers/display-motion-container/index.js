@@ -13,7 +13,7 @@ const DisplayMotionContainer = () => {
     return (
         <Container>
              <span>This is the Display motion Container</span>
-             <Box sx={{ bgcolor: '#cfe8fc', height: '50vh' }} />
+             {/* <Box sx={{ bgcolor: '#cfe8fc', height: '50vh' }} /> */}
         </Container>
         
     )

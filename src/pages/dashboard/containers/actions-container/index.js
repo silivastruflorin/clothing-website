@@ -3,20 +3,38 @@ import React from "react";
 //Logic
 
 //Components
-
+import ActionsComponent from "../../components/actions-component";
 //Material UI
 import Container from '@mui/material/Container';
-import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import { Button } from "@material-ui/core";
+
 
 const ActionsContainer = () => {
     //some use state / hooks
     return (
         <Container>
-            <span>This is the action Container</span>
-            <Box sx={{ bgcolor: '#cfe8fc', height: '100vh' }} />
+            <ActionsComponent>
+                <Typography variant="h6" color='common.white'> Motion Planning</Typography>
+            </ActionsComponent>
+            
+            <ActionsComponent>
+                <Typography variant="h6" color='common.white'> Manual Control</Typography>
+                 <Button style={{  backgroundColor: '#00FF00' }}>Move</Button>
+                 <Button style={{  backgroundColor: '#FF0000' }} >Stop</Button>
+            </ActionsComponent>
         </Container>
         
     )
 }
 
 export default ActionsContainer;
+
+
+
+
+
+
+
+          
+

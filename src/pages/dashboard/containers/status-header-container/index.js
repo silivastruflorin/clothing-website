@@ -13,7 +13,7 @@ import { Grid } from "@material-ui/core";
 
 
 
-const StatusHeaderComponent = () => {
+const StatusHeaderComponent = ({...props}) => {
 
     useEffect(()=>{
         //
@@ -21,13 +21,13 @@ const StatusHeaderComponent = () => {
 
     return(
         <>
-            <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }} style={{backgroundColor:'cyan'}}>
+            <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }} {...props} >
   
                 <Grid item xs={2} sm={2} md={2} >
-                    <CellComponent staticText='Connection:' value='test' />
+                    <CellComponent staticText='Connection:' value='test' style={{color:'#41DEFA'}} />
                 </Grid>
                 <Grid item xs={2} sm={2} md={2} >
-                    <CellComponent staticText='Wifi Status:' value='connected' />
+                    <CellComponent staticText='Wifi Status:' value='connected'  style={{color:'#41DEFA'}} />
                 </Grid>
                 <Grid item xs={2} sm={2} md={2} >
                     <CellComponent staticText='space:' value='' />

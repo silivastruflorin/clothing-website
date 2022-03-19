@@ -1,10 +1,11 @@
 import React from "react";
 
-const CellComponent = ({ staticText, value }) => {
+const CellComponent = ({ staticText, value, ...props }) => {
     return(
         <>
-         <span>{staticText}</span> 
-         <span>{value}</span>
+         <span {...props}>{staticText}</span> 
+         <span> </span>
+         <span {...props}>{value}</span>
         </>
      )  
 }

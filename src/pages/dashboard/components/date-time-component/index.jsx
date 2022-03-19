@@ -13,7 +13,7 @@ const DateTimeComponent = () => {
         }
     },[date])
     return(
-        <span>date/time: {date.toLocaleString()}</span>
+        <span  style={{color:'#41DEFA'}}>date/time: {date.toLocaleString()}</span>
     )
 }
 

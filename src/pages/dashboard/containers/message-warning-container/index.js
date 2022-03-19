@@ -32,11 +32,11 @@ const testAlarms = [
     
 ]
 
-const MessageWarningContainer = () => {
+const MessageWarningContainer = ({...props}) => {
     //some use state / hooks
     return (
         <>
-         <Container maxWidth='auto' >
+         <Container maxWidth='auto' {...props}>
             {/* Alarm tabel content */}
             <AlarmTableComponent rows={testAlarms} />
          </Container>
