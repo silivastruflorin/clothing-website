@@ -63,16 +63,16 @@ function Dashboard(){
             {/* 
                 Grid to hold container components actions/display motion/ joint status
             */}
-            <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-                <Grid item xs={4} sm={4} md={3} style={{background: 'red', width:'auto'}} >
+            <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }} >
+                <Grid item xs={4} sm={4} md={3} style={{backgroundImage: 'linear-gradient(to left, rgba(0,23,49,0.9), rgba(0,23,49))', width:'auto'}} >
                     {/* actions container */}
                     <ActionsContainer />
                 </Grid>
-                <Grid item xs={4} sm={4} md={6}  style={{background: 'aqua', width:'auto'}}>
+                <Grid item xs={4} sm={4} md={6}  style={{background: 'rgba(0,23,49,0.9)', width:'auto'}}>
                     {/* display motion container */}
                     <DisplayMotionContainer />
                 </Grid>
-                <Grid item xs={4} sm={4} md={3}  style={{background: 'yellow', width:'auto'}}>
+                <Grid item xs={4} sm={4} md={3}  style={{backgroundImage: 'linear-gradient(to right,  rgba(0,23,49,0.9), rgba(0,23,49))', width:'auto'}}>
                     {/* joint Status Container */}
                     <JointStatusContainer />
                 </Grid>
