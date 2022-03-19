@@ -9,12 +9,12 @@ import MensPage from './pages/shop/mens-page/Mens-Page';
 import WomensPage from './pages/shop/women-page/Women-Page';
 import ErrorPage  from './pages/error-page/ErrorPage';
 import LogInPage  from './pages/user/Login-Page';
-import Loading  from '../src/components/loading/loading';
+import Dashboard from './pages/dashboard/dashboard';
 
 
 //Import used for Redux
 import { Provider } from 'react-redux';
-import store, { history } from './redux/store';
+import store, { history } from './redux/store/store';
 
 import reportWebVitals from './reportWebVitals'; 
 //Connected Router
@@ -23,6 +23,8 @@ import { ConnectedRouter } from 'connected-react-router'
 import Casual from './pages/shop/casual/casual';
 import StreetWear from './pages/shop/street-wear/street-wear';
 import Boots from './pages/shop/boots/boots';
+import { PrivateRoute } from './components/_Private-Route/private-route-component';
+
 
 
 ReactDOM.render(
@@ -38,6 +40,8 @@ ReactDOM.render(
           <Route  path="/shop/Boots" component={Boots} />
           <Route  path="/shop/StreetWear" component={StreetWear} />
           <Route  path="/shop/Casual" component={Casual} />
+          {/* Private Routes*/}
+          <PrivateRoute path="/Dashboard" component={Dashboard} redirectPath="/user/SignIn" roles={"not used"} />
           <Route path="" component={ErrorPage} />
         </Switch>
       </>

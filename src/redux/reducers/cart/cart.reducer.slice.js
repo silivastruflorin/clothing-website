@@ -44,9 +44,10 @@ const shopSlice = createSlice({
     },
     GET_PRODUCTS_REQUEST_SUCCESEED: (state, action) => {
         //logic to be implemented
+        console.log("sassasa",action.payload)
         state.isRetrevingProducts = false;
         state.productsOnPage = action.payload;
-        console.log(action)
+        
         },
     GET_PRODUCTS_REQUEST_FAILED(state, action) {
     //logic to be implemented

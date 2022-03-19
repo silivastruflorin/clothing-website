@@ -13,7 +13,7 @@ import Typography from '@mui/material/Typography';
 //User defined
 // import { AddItemToCart} from '../../../redux/cart/cart.actions';  //REPLACED BY SHOPSLICE
 import { RatingsSelector, ProductsSelector, InfoIsRetreivedSelector, IsRetrevingProductsSelector} from '../../../redux/selectors/selectors';
-import { ADD_ITEMS_TO_CART, ITEM_INFO_REQUESTED } from '../../../redux/cart/cart.reducer.slice';
+import { ADD_ITEMS_TO_CART, ITEM_INFO_REQUESTED } from '../../../redux/reducers/cart/cart.reducer.slice';
 
 let ItemsDisplay = () => {
   const [filter, setFilter] = useState('');

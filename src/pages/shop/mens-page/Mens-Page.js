@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
 import Container from '@mui/material/Container';
 import ItemsDisplay from '../../../components/shop/shop-body/ItemsDisplay.component'
 import {IsRetrevingProductsSelector} from '../../../redux/selectors/selectors'
-import { GET_PRODUCTS_REQUEST } from '../../../redux/cart/cart.reducer.slice';
+import { GET_PRODUCTS_REQUEST } from '../../../redux/reducers/cart/cart.reducer.slice';
 import Loading from "../../../components/loading/loading";
 
 

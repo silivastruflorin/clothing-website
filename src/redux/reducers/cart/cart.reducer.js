@@ -50,7 +50,7 @@ const cartReducer = (state = INITIAL_STATE , action) => {
             }
 
         case 'GET_PRODUCTS_REQUEST_SUCCESEED':
-            // console.log(action.ratings)
+            
             return {
                 ...state,
                 productsOnPage: action.products, //yelded by redux.sagas.js

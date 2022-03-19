@@ -1,4 +1,4 @@
-import { AUTH_REUEST } from '../../redux/user/userSlice.reducer';
+import { AUTH_REUEST } from '../../redux/reducers/user/userSlice.reducer';
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { IsLoggedInSelector } from '../../redux/selectors/selectors'
