@@ -17,11 +17,12 @@ const ActionsContainer = () => {
             <ActionsComponent>
                 <Typography variant="h6" color='common.white'> Motion Planning</Typography>
             </ActionsComponent>
-            
+
             <ActionsComponent>
                 <Typography variant="h6" color='common.white'> Manual Control</Typography>
                  <Button style={{  backgroundColor: '#00FF00' }}>Move</Button>
                  <Button style={{  backgroundColor: '#FF0000' }} >Stop</Button>
+                 <Button style={{  backgroundColor: '#FFFF00' }} >Start</Button>
             </ActionsComponent>
         </Container>
         
