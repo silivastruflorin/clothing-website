@@ -17,6 +17,7 @@ import { Grid } from "@material-ui/core";
 import JointStatusContainer from "./containers/joint-status-container";
 import MessageWarningContainer from "./containers/message-warning-container";
 
+
 const DashboardList = ({dispatch}) => {
     return(
         <span>

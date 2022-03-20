@@ -62,20 +62,23 @@ const finalTheme = createTheme(themeGlobals,{
 
 const ActionsComponent = (props) => {
     return(
-             <ThemeProvider theme={finalTheme}> 
-             {/* draws a small thick line above the card */}
-             <Box sx={{ display: 'flex', justifyContent: 'center'}} >
-                      <Box sx={{ alignSelf: 'bottom', borderColor: (theme)=>(theme.colors.text), borderStyle: 'outset', borderWidth: 2, width:'60%' }} /> 
-              </Box>
-              <Card elevation={0} statusprop='Healty'> {/*passing custom prop so that the backgroundColor to change based on status(see final theme) */}
-                  <CardContent>
-                      
-                      {props.children}
-                      
-                  </CardContent>
-              
-               </Card>
-             </ThemeProvider>
+            <>
+              <ThemeProvider theme={finalTheme}> 
+              {/* draws a small thick line above the card */}
+              <Box sx={{ display: 'flex', justifyContent: 'center'}} >
+                        <Box sx={{ alignSelf: 'bottom', borderColor: (theme)=>(theme.colors.text), borderStyle: 'outset', borderWidth: 2, width:'60%' }} /> 
+                </Box>
+                <Card elevation={0} statusprop='Healty'> {/*passing custom prop so that the backgroundColor to change based on status(see final theme) */}
+                    <CardContent>
+                        
+                        {props.children}
+                        
+                    </CardContent>
+                
+                </Card>
+              </ThemeProvider>
+            </>
+         
 
     )
 }

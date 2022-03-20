@@ -7,12 +7,14 @@ import ActionsComponent from "../../components/actions-component";
 //Material UI
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-import { Button } from "@material-ui/core";
+import Button from '@mui/material/Button';
+
 
 
 const ActionsContainer = () => {
     //some use state / hooks
     return (
+     
         <Container>
             <ActionsComponent>
                 <Typography variant="h6" color='common.white'> Motion Planning</Typography>
@@ -25,7 +27,7 @@ const ActionsContainer = () => {
                  <Button style={{  backgroundColor: '#FFFF00' }} >Start</Button>
             </ActionsComponent>
         </Container>
-        
+
     )
 }
 
