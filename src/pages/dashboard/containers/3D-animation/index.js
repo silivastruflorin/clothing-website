@@ -20,21 +20,21 @@
  after first render useEfect <canvas> is returned/rendered/appears in DOM 
  
  */
-
 import React, { useEffect, useRef, useState } from "react";
 import * as THREE from 'three';
 
 //Material UI
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 
 
 
-const Canvas3D = () => {
+const Canvas3D = ({ width, height }) => {
     const canvasRef = useRef();   //initial value is null because canvas is returned by this component
     const [myCanvas, setMyCanvas] = useState(canvasRef.current)   //we save the value in the state so after first render value changes from null to <canvas> and in use effect we force rerender
-   
+    
+    console.log('canvas', width)
     const renderer3D = new THREE.WebGLRenderer({canvas:myCanvas});
-    renderer3D.setSize( 500, 500 );
+    renderer3D.setSize( width, height );
     // document.body.appendChild( renderer3D.domElement );
 
     const camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 500 );
@@ -81,10 +81,12 @@ const Canvas3D = () => {
  
     //some use state / hooks
     return (
-        <>
+        <Box sx={{ display: 'flex', alignItems: 'flex-start', flexDirection: 'column', p: 1, m: 1}} >
+            <canvas ref={canvasRef}></canvas>           
             <Button onClick={handleDrawNewLine}>Add</Button>
-            <canvas ref={canvasRef}></canvas>   
-        </>
+        </Box>
+            
+   
           
     )
 }
