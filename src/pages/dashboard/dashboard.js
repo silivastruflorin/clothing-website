@@ -1,12 +1,15 @@
 import React, { useEffect, useReducer } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { push } from 'connected-react-router';
+
 //Custom imports
 //Logic
 import store from "../../redux/store/store";
 import counterSlice from './reducer';
 import {increment} from './reducer';
 import { counterSelector } from "./selectors";
-
+import { IsLoggedInSelector } from '../../redux/selectors/selectors'
+import { authService } from '../../services/authentification/auth';
 
 //Components
 import StatusHeaderContainer from "./containers/status-header-container/index";
@@ -30,6 +33,9 @@ const DashboardList = ({dispatch}) => {
 
 function Dashboard(){
         const dispatch = useDispatch();
+        let loggedIn = useSelector(IsLoggedInSelector);
+        const currentUser = authService.getCurrentUser();
+        //add component slice to the store asynchronously
         store.reducerManager.add("counterSlice", counterSlice);
         const value = useSelector(counterSelector);
 
@@ -41,7 +47,9 @@ function Dashboard(){
         selectors to access values from the store
     */
     useEffect(()=>{
-        // console.log('useEffect called')
+        if (loggedIn === false && !currentUser ){
+            dispatch(push('/')) // not logged in home page
+        }
         return function cleanUp() {
             //executes when the component dismounts
             //Optionally remove Component's reducer after is dismounted from the state
@@ -49,7 +57,7 @@ function Dashboard(){
             // console.log("Component dismounted")
         }
 
-    },[])
+    },[loggedIn])
     
 
     return(

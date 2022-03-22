@@ -32,6 +32,7 @@ const UserSlice = createSlice({
     AUTH_LOGOUT_REQ_SUCCESS: (state) => {
       state.currentUser = '';
       state.loggedIn = false;
+      state.message = "";
       authService.deleteFromLocalStorage();
 
     },

@@ -22,7 +22,9 @@
  */
 import React, { useEffect, useRef, useState } from "react";
 import * as THREE from 'three';
-
+import { GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import model3D from './model/model3d_blender_export.glb';  //needs to be imported so file is processed by webpack.
 //Material UI
 import { Box, Button } from "@mui/material";
 
@@ -31,31 +33,38 @@ import { Box, Button } from "@mui/material";
 const Canvas3D = ({ width, height }) => {
     const canvasRef = useRef();   //initial value is null because canvas is returned by this component
     const [myCanvas, setMyCanvas] = useState(canvasRef.current)   //we save the value in the state so after first render value changes from null to <canvas> and in use effect we force rerender
+    let renderer3D, loader, camera, light, scene, controls 
+
+    function initialization (){
+        renderer3D = new THREE.WebGLRenderer({canvas:myCanvas});
+        loader = new GLTFLoader();
+        renderer3D.setSize( width, height );
+        // document.body.appendChild( renderer3D.domElement );
+
+        camera = new THREE.PerspectiveCamera( 45, width / height, 1, 500 );
+        camera.position.set( 0, 0, 100 );
+        camera.lookAt( 0, 0, 0 );
+        scene = new THREE.Scene();
+        light = new THREE.AmbientLight( 0x404040, 5 ); // soft white light
+        scene.add( light );
+        
+        //Load the 3D model from file
+        loader.load( model3D, function ( gltf ) { 
+            scene.add( gltf.scene );
+        }, undefined, function ( error ) {
+            console.error( error );
+        } );
+
+
+        controls = new OrbitControls( camera, renderer3D.domElement );
+        controls.addEventListener( 'change', update ); // call this only in static scenes (i.e., if there is no animation loop)
     
-    console.log('canvas', width)
-    const renderer3D = new THREE.WebGLRenderer({canvas:myCanvas});
-    renderer3D.setSize( width, height );
-    // document.body.appendChild( renderer3D.domElement );
 
-    const camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 500 );
-    camera.position.set( 0, 0, 100 );
-    camera.lookAt( 0, 0, 0 );
-    const scene = new THREE.Scene();
-    //create a blue LineBasicMaterial
-    const material = new THREE.LineBasicMaterial( { color: 0x0000ff } );
+        controls.update();
+        renderer3D.render( scene, camera ); //default display
+    }
 
-    const points = [];
-    points.push( new THREE.Vector3( - 10, 0, 0 ) );
-    points.push( new THREE.Vector3( 0, 10, 0 ) );
-    points.push( new THREE.Vector3( 10, 0, 0 ) );
-
-    const geometry = new THREE.BufferGeometry().setFromPoints( points );
-
-    const line = new THREE.Line( geometry, material );
-
-    scene.add( line );
-
-    renderer3D.render( scene, camera ); //default display
+    initialization();
 
 
     useEffect(()=>{
@@ -64,26 +73,15 @@ const Canvas3D = ({ width, height }) => {
     },[myCanvas])
 
 
-    function handleDrawNewLine (){
-        const points = [];
-        points.push( new THREE.Vector3( - 20 , 0, 0 ) );
-        points.push( new THREE.Vector3( 0, 20, 0 ) );
-        points.push( new THREE.Vector3( 20 , 0, 0 ) );
-    
-        const geometry = new THREE.BufferGeometry().setFromPoints( points );
-    
-        const line = new THREE.Line( geometry, material );
-        scene.add( line )
+    function update (){
         renderer3D.render( scene, camera );
     }
    
-
- 
     //some use state / hooks
     return (
         <Box sx={{ display: 'flex', alignItems: 'flex-start', flexDirection: 'column', p: 1, m: 1}} >
             <canvas ref={canvasRef}></canvas>           
-            <Button onClick={handleDrawNewLine}>Add</Button>
+            <Button onClick={update}>update</Button>
         </Box>
             
    

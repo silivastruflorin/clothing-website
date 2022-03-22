@@ -1,7 +1,6 @@
 import { AUTH_REUEST } from '../../redux/reducers/user/userSlice.reducer';
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { IsLoggedInSelector } from '../../redux/selectors/selectors'
 
 //material UI
 import Avatar from '@mui/material/Avatar';
@@ -20,6 +19,9 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 //Routing
 import { push } from 'connected-react-router';
+
+//custom Imports
+import { IsLoggedInSelector, LoggedInMessageSelector } from '../../redux/selectors/selectors'
 
 
 // const userAcount = {
@@ -45,13 +47,11 @@ const  LogInPage = () => {
     const [email, SetEmail] = useState('');
     const [password, SetPassword] = useState('');
     let loggedIn = useSelector(IsLoggedInSelector);
-    const [count, SetCount] = useState(0);
+    let LogginMessage = useSelector(LoggedInMessageSelector);
     const dispatch = useDispatch();
 
     useEffect(
         () => {
-            console.log(count)
-            SetCount(count + 1)
             // Update the document title using the browser API
             if (loggedIn === true){
                 dispatch(push('/')) // home page
@@ -102,6 +102,8 @@ const  LogInPage = () => {
                         id="password"
                         autoComplete="current-password"
                         onChange={(e)=> SetPassword(e.target.value)}
+                        helperText={LogginMessage.code !== "" ? LogginMessage.code : "" }
+                        error={(LogginMessage.code === undefined) ?  null : 'error' }
                     />
                     <FormControlLabel
                         control={<Checkbox value="remember" color="primary" />}
@@ -117,12 +119,12 @@ const  LogInPage = () => {
                     </Button>
                     <Grid container>
                         <Grid item xs>
-                        <Link href="#" variant="body2">
-                            Forgot password?
+                        <Link href="#" variant="body2" >
+                        disabled Forgot password? 
                         </Link>
                         </Grid>
                         <Grid item>
-                        <Link href="#" variant="body2">
+                        <Link variant="body2" onClick={()=>{dispatch(push('/user/SignUp'))}}>
                             {"Don't have an account? Sign Up"}
                         </Link>
                         </Grid>

@@ -9,6 +9,7 @@ import MensPage from './pages/shop/mens-page/Mens-Page';
 import WomensPage from './pages/shop/women-page/Women-Page';
 import ErrorPage  from './pages/error-page/ErrorPage';
 import LogInPage  from './pages/user/Login-Page';
+import SignUp  from './pages/user/signUp';
 import Dashboard from './pages/dashboard/dashboard';
 
 
@@ -37,6 +38,7 @@ ReactDOM.render(
           <Route  path="/shop/MensPage" component={MensPage} />
           <Route  path="/shop/WomensPage" component={WomensPage} />
           <Route  path="/user/SignIn" component={LogInPage} />
+          <Route  path="/user/SignUp" component={SignUp} />
           <Route  path="/shop/Boots" component={Boots} />
           <Route  path="/shop/StreetWear" component={StreetWear} />
           <Route  path="/shop/Casual" component={Casual} />

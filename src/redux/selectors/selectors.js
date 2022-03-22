@@ -6,6 +6,7 @@ const selectProducts = state => state.shopReducer.productsOnPage;
 const selectInfoIsRetreived = state => state.shopReducer.isRetrevingInfoProduct;
 const selectIsRetrevingProducts = state => state.shopReducer.isRetrevingProducts;
 const selectIsLoggedIn = state => state.UserReducer.loggedIn;
+const selectLogInMessage = state => state.UserReducer.message;
 const selectCurrentUser = state => state.UserReducer.currentUser;
 
 
@@ -25,4 +26,5 @@ export const TotalPriceSelector = createSelector(CartItemsSelector,(items)=> ite
 
 
 export const IsLoggedInSelector = createSelector(selectIsLoggedIn,(loggedIn)=>  loggedIn);
+export const LoggedInMessageSelector = createSelector(selectLogInMessage,(message)=>  message);
 export const CurrentUserSelector = createSelector(selectCurrentUser,(user)=>  user);
