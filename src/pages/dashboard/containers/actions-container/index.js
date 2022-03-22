@@ -18,6 +18,10 @@ const ActionsContainer = () => {
         <Container>
             <ActionsComponent>
                 <Typography variant="h6" color='common.white'> Motion Planning</Typography>
+                <Typography variant="body2" > X - target : </Typography>
+                <Typography variant="body2" > Y - target : </Typography>
+                <Typography variant="body2" > Z - target : </Typography>
+                 <Button style={{  backgroundColor: '#FF0000' }} >Trajectory</Button>
             </ActionsComponent>
 
             <ActionsComponent>

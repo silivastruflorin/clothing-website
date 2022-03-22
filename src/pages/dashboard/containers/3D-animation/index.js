@@ -33,20 +33,40 @@ import { Box, Button } from "@mui/material";
 const Canvas3D = ({ width, height }) => {
     const canvasRef = useRef();   //initial value is null because canvas is returned by this component
     const [myCanvas, setMyCanvas] = useState(canvasRef.current)   //we save the value in the state so after first render value changes from null to <canvas> and in use effect we force rerender
-    let renderer3D, loader, camera, light, scene, controls 
-
+    let renderer3D, loader, camera, light, scene, controls
     function initialization (){
         renderer3D = new THREE.WebGLRenderer({canvas:myCanvas});
         loader = new GLTFLoader();
         renderer3D.setSize( width, height );
+        renderer3D.setPixelRatio( window.devicePixelRatio );
         // document.body.appendChild( renderer3D.domElement );
 
         camera = new THREE.PerspectiveCamera( 45, width / height, 1, 500 );
         camera.position.set( 0, 0, 100 );
         camera.lookAt( 0, 0, 0 );
         scene = new THREE.Scene();
-        light = new THREE.AmbientLight( 0x404040, 5 ); // soft white light
-        scene.add( light );
+        // lights
+
+        const hemiLight = new THREE.HemisphereLight( 0xffffff, 0x444444 );
+        hemiLight.position.set( 0, 20, 0 );
+        scene.add( hemiLight );
+
+        const dirLight = new THREE.DirectionalLight( 0xffffff );
+        dirLight.position.set( - 3, 10, - 10 );
+        dirLight.castShadow = true;
+        dirLight.shadow.camera.top = 2;
+        dirLight.shadow.camera.bottom = - 2;
+        dirLight.shadow.camera.left = - 2;
+        dirLight.shadow.camera.right = 2;
+        dirLight.shadow.camera.near = 0.1;
+        dirLight.shadow.camera.far = 40;
+        scene.add( dirLight );
+        // ground
+
+        const mesh = new THREE.Mesh( new THREE.PlaneGeometry( 100, 100 ), new THREE.MeshPhongMaterial( { color: 0x277988, depthWrite: false } ) );
+        mesh.rotation.x = - Math.PI / 2;
+        mesh.receiveShadow = true;
+        scene.add( mesh );
         
         //Load the 3D model from file
         loader.load( model3D, function ( gltf ) { 
@@ -54,6 +74,7 @@ const Canvas3D = ({ width, height }) => {
         }, undefined, function ( error ) {
             console.error( error );
         } );
+
 
 
         controls = new OrbitControls( camera, renderer3D.domElement );
@@ -81,7 +102,12 @@ const Canvas3D = ({ width, height }) => {
     return (
         <Box sx={{ display: 'flex', alignItems: 'flex-start', flexDirection: 'column', p: 1, m: 1}} >
             <canvas ref={canvasRef}></canvas>           
-            <Button onClick={update}>update</Button>
+            <Box sx={{ display: 'flex', alignItems: 'flex-start', flexDirection: 'row'}} >        
+                <Button onClick={update}>Update</Button>
+                <Button onClick={update}>Zoom Out</Button>
+                <Button onClick={update}>Zoom In</Button>
+                <Button onClick={update}>Rotate</Button>
+            </Box>
         </Box>
             
    
