@@ -2,69 +2,57 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Road map:
+    Purpose: Learn React by creating simple clothing shop
+    
+## Stages:
+    1. Create React App:
+        - All components in one folder: !!! BAD  design!!! 
+    Update: for each page (see Dashboard as example) create a folder structure: 
+        - components
+        - container
+        - reducers
+        - hooks
 
-In the project directory, you can run:
+    2. Build the UI using `Material UI`: 
+        - One home page 
+        - One navigation bar
+        - Two store pages: one for women and oen for men
+        - One cart icon that displays a badge with the number of products in the cart
+    
+    Update: new page added called Dashboard. Not related to online shop but for another application. Used to test a "protected" route
+    
+    3. Redux:
+        - create a "Store"
+        - create reducers that will be holded by the "store" ( userReducer, cartReducer )
+        - create actions that will be dispatched to the store ( when using connect and mapDispatchToProps / mapStateToProps )
+        - Redux dev tools 
 
-### `npm start`
+    Update: refactoring reducers to use `createSlice`
+    Update: refactoring 'store' to support asynchronus reducer loading using Reducer Manager.
+    
+    4. Saga:
+        - Refactoring the data retreiver from useEffect() to Saga
+        - Middleware used to fetch data from APIs (https://fakestoreapi.com/ , firebase for authentification)
+        - Implement the Watcher and the workers  
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+    5. Connected Router:
+        - Used for navigation between pages
+        - "Protected" route implemented 
+    
+    6. Hooks:
+        - standard hooks: useState, useDispatch
+        - custom hooks: useComponentSize (to get the width and height of the component even if the window is resized)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+    7. Selectors:
+        - use selectors to access the Store state
+        - all selectors in one file:!!! To be created individual file per page
 
-### `npm test`
+    8. 3D model added using Three.js
+    
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+        
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
 
 **Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
