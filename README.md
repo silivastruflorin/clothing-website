@@ -46,7 +46,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
     7. Selectors:
         - use selectors to access the Store state
-        - all selectors in one file:!!! To be created individual file per page
+        - all selectors are in one file: !!! To be created individual file per page
 
     8. 3D model added using Three.js
     
