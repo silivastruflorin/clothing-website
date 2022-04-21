@@ -1,41 +1,51 @@
-import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/material/Menu';
 import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
+import Grid from '@mui/material/Grid';
 
-const pages = ['Products', 'Pricing', 'Blog'];
+import CustomizedBadges from '../../components/shopping-Cart/ShoppingCartIcon.component';
+import { connect, useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { push } from 'connected-react-router';
+import { AUTH_LOGOUT_REQ } from '../../redux/reducers/user/userSlice.reducer';
+import { authService } from '../../services/authentification/auth';
+
+const pages = ['Dashboard', 'TBA2'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-export const HeaderComponent = () => {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+let HeaderComponent = () => {
+  const dispatch = useDispatch();
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [anchorElUser, setAnchorElUser] = useState(null);
 
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
   const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
+    setAnchorElUser(event.currentTarget);   
+    
   };
 
-  const handleCloseNavMenu = () => {
+  const handleCloseNavMenu = (option) => {
     setAnchorElNav(null);
+    setAnchorElUser(null);
+    if (option === "Logout") {
+      console.log("Logout started");
+      dispatch(AUTH_LOGOUT_REQ())
+    }else if (option === "Dashboard") {
+      console.log("Dashboard is here");
+    }
   };
 
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
+
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
@@ -43,94 +53,57 @@ export const HeaderComponent = () => {
             noWrap
             component="div"
             sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
+            onClick={()=> dispatch(push('/'))}
           >
-            LOGO
-          </Typography>
-
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: 'block', md: 'none' },
-              }}
-            >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
-          >
-            LOGO
+            LOGO HERE(Home)
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
                 key={page}
-                onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
+                onClick={()=> dispatch(push(`/${page}`)) }
               >
                 {page}
               </Button>
             ))}
           </Box>
-
+          
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={e => handleOpenUserMenu(e)} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="https://picsum.photos/id/1010/100/100" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
+          <Grid container spacing={4}>
+            <Grid item xs>
+              <CustomizedBadges />  {/* Shopping cart badge  */}
+            </Grid>
+            <Grid item xs>
+              <Tooltip title="Open settings">
+                <IconButton onClick={e => authService.getCurrentUser() ? handleOpenUserMenu(e) : dispatch(push("/user/SignIn"))} sx={{ p: 0 }}>
+                  <Avatar alt="Remy Sharp" src="https://picsum.photos/id/1010/100/100" />
+                </IconButton>
+               </Tooltip>
+              <Menu
+                sx={{ mt: '45px' }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={()=>setAnchorElUser(null)}
+              >
+                {settings.map((setting) => (
+                  <MenuItem key={setting} onClick={()=>handleCloseNavMenu(setting)}>
+                    <Typography textAlign="center" >{setting}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Grid>
+          </Grid>     
           </Box>
         </Toolbar>
       </Container>
@@ -138,3 +111,11 @@ export const HeaderComponent = () => {
   );
 };
 
+// const mapDispatchToProps = dispatch => {
+//   return {
+//       push: (page) => dispatch(push(page))
+//   }
+// // }
+
+// HeaderComponent = connect(null,mapDispatchToProps)(HeaderComponent);
+export {HeaderComponent};

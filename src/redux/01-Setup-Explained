@@ -1,0 +1,5 @@
+1 create files that will contain the reducers
+2. create a file that will contain the root-reducers
+3. create the file that wil contain the "Store"
+4. wrapp entire app in <Provider> </Provider> and pass the store as prop <Provider store = {nameOfTheStore}> <App />  </Provider> 
+5.Create a file that will contain the user-actions
