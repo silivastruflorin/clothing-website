@@ -22,9 +22,7 @@ import MessageWarningContainer from "./containers/message-warning-container";
 
 //testhhh
 const test1 = false;
-//dfdf
-//testtt
-//sadsdd
+//I am test 2
 const DashboardList = ({dispatch}) => {
     return(
         <span>
