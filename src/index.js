@@ -25,6 +25,7 @@ import Casual from './pages/shop/casual/casual';
 import StreetWear from './pages/shop/street-wear/street-wear';
 import Boots from './pages/shop/boots/boots';
 import { PrivateRoute } from './components/_Private-Route/private-route-component';
+import ModifiedChips from './pages/portofolio/components/chips/modified-chips';
 
 
 
@@ -42,6 +43,7 @@ ReactDOM.render(
           <Route  path="/shop/Boots" component={Boots} />
           <Route  path="/shop/StreetWear" component={StreetWear} />
           <Route  path="/shop/Casual" component={Casual} />
+          <Route  path="/Portofolio" component={ModifiedChips} />
           {/* Private Routes*/}
           <PrivateRoute path="/Dashboard" component={Dashboard} redirectPath="/user/SignIn" roles={"not used"} />
           <Route path="" component={ErrorPage} />

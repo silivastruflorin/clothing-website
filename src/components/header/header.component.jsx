@@ -18,7 +18,7 @@ import { push } from 'connected-react-router';
 import { AUTH_LOGOUT_REQ } from '../../redux/reducers/user/userSlice.reducer';
 import { authService } from '../../services/authentification/auth';
 
-const pages = ['Dashboard', 'TBA2'];
+const pages = ['Dashboard', 'Portofolio'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 let HeaderComponent = () => {
